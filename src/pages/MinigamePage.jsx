@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 export default function MinigamePage() {
-	return (
-		<div>minigame</div>
-	)
+  return (
+    <div>minigame</div>
+  );
 }
