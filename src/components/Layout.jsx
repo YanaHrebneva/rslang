@@ -9,6 +9,10 @@ export default function Layout() {
         <Link to="/book">Book</Link>
         <Link to="/minigame">Minigame</Link>
         <Link to="/statistic">Statistic</Link>
+        <Link to="/login">
+          Login
+          {/* <img src="assets/images/login.svg" alt="Logo"/> */}
+        </Link>
       </header>
       <main className="main">
         <Outlet />
