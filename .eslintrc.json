@@ -18,7 +18,8 @@
     ],
     "rules": {
         "react-router-dom": "off",
-        "react/jsx-filename-extension": "off"
+        "react/jsx-filename-extension": "off",
+        "linebreak-style":"off"
     },
     "ignorePatterns": ["*test*.js"]
 }

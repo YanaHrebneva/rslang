@@ -7,6 +7,7 @@ import BookPage from './pages/BookPage';
 import MinigamePage from './pages/MinigamePage';
 import StatisticPage from './pages/StatisticPage';
 import Error from './pages/Error';
+import Login from './pages/Login/Login';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="minigame" element={<MinigamePage />} />
         <Route path="statistic" element={<StatisticPage />} />
         <Route path="*" element={<Error />} />
+        <Route path="login" element={<Login />} />
       </Route>
     </Routes>
   );
