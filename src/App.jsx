@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
@@ -13,12 +13,13 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
+        <Route exact path="/" element={<Navigate to="/home" />} />
         <Route index path="home" element={<HomePage />} />
         <Route path="book" element={<BookPage />} />
         <Route path="minigame" element={<MinigamePage />} />
         <Route path="statistic" element={<StatisticPage />} />
-        <Route path="*" element={<Error />} />
         <Route path="login" element={<Login />} />
+        <Route path="*" element={<Error />} />
       </Route>
     </Routes>
   );
