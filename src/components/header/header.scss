@@ -1,0 +1,20 @@
+header {
+	background-color: var(--color-bg);
+	padding: 2rem 12rem;
+	text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav > a {
+	color: #ac3b61;
+	text-decoration: none;
+	padding: 0 1rem;
+}
+header > a:hover {
+	text-decoration: underline;
+}
+
+.login-icon {
+  width: 40px;
+}

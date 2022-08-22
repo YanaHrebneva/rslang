@@ -1,19 +1,11 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import Header from './header/header';
 
 export default function Layout() {
   return (
     <div className="appWrapper">
-      <header className="header">
-        <Link to="/home">Home</Link>
-        <Link to="/book">Book</Link>
-        <Link to="/minigame">Minigame</Link>
-        <Link to="/statistic">Statistic</Link>
-        <Link to="/login">
-          Login
-          {/* <img src="assets/images/login.svg" alt="Logo"/> */}
-        </Link>
-      </header>
+      <Header />
       <main className="main">
         <Outlet />
       </main>
