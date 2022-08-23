@@ -4,23 +4,12 @@
 	height: 100%;
 }
 :root {
-	--color-bg: #2c2c32;
+	--color-bg: #fffdfc;
+	--color-menu-font: #ac3b61;
+	--color-title-font: #123C69;
 	--color-active: #0f7dc6;
 }
 /* Шапка сайта */
-header {
-	background-color: var(--color-bg);
-	padding: 2rem 0;
-	text-align: center;
-}
-header > a {
-	color: white;
-	text-decoration: none;
-	padding: 0 1rem;
-}
-header > a:hover {
-	text-decoration: underline;
-}
 
 main {
 	text-align: center;
