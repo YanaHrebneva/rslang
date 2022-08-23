@@ -6,15 +6,29 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
 nav > a {
-	color: #ac3b61;
+	font-size: 1.25rem;
+	color: var(--color-menu-font);
 	text-decoration: none;
 	padding: 0 1rem;
 }
-header > a:hover {
-	text-decoration: underline;
+
+nav > a:hover {
+	color: #123C69;
 }
 
 .login-icon {
   width: 40px;
+}
+
+.logo {
+	font-size: 1.5rem;
+	color: #123C69;
+	user-select: none;
+}
+
+.logo-blue {
+	text-transform: capitalize;
+	color:var(--color-menu-font);
 }
