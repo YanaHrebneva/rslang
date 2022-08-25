@@ -1,5 +1,5 @@
 import React from 'react';
-import './style.scss';
+import '../../App.scss';
 import { Grid, Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';

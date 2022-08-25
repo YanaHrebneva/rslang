@@ -8,6 +8,7 @@ import MinigamePage from './pages/MinigamePage';
 import StatisticPage from './pages/StatisticPage';
 import Error from './pages/Error';
 import Login from './pages/Login/Login';
+import Registration from './pages/Registration/Registration';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="minigame" element={<MinigamePage />} />
         <Route path="statistic" element={<StatisticPage />} />
         <Route path="login" element={<Login />} />
+        <Route path="registration" element={<Registration />} />
         <Route path="*" element={<Error />} />
       </Route>
     </Routes>

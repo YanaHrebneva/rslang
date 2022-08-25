@@ -26,4 +26,13 @@ export default class UserService {
       }))
       .catch(errorHandler);
   }
+
+  static registration(name, email, password) {
+    return instance.post(path.users, { name, email, password })
+      .then((resp) => ({
+        successful: true,
+        data: resp.data,
+      }))
+      .catch(errorHandler);
+  }
 }
