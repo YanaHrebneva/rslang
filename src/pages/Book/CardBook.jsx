@@ -3,12 +3,14 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { CardActionArea, CardActions } from '@mui/material';
+import { ButtonPlay } from './ButtonPlay';
+import { BASE_URL } from '../../constants/url';
 
 export default function CardBook({
   word, transcription, image,
   textMeaning, textMeaningTranslate,
-  textExampleTranslate, textExample,
+  textExampleTranslate, textExample, audio, audioExample, audioMeaning,
 }) {
   return (
     <Card sx={{
@@ -20,7 +22,7 @@ export default function CardBook({
         <CardMedia
           component="img"
           height="200"
-          image={`https://rslang-yanahrebneva.herokuapp.com/${image}`}
+          image={`${BASE_URL}${image}`}
           alt={word}
         />
         <CardContent>
@@ -39,9 +41,9 @@ export default function CardBook({
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <ButtonPlay urlArr={[audio, audioExample, audioMeaning]} size="small" color="primary">
           Play
-        </Button>
+        </ButtonPlay>
       </CardActions>
     </Card>
   );
