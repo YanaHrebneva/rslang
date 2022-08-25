@@ -1,12 +1,13 @@
 import { createTheme } from '@mui/material/styles';
+import App from '../App.scss';
 
 export const mainTheme = createTheme({
   palette: {
     primary: {
-      main: '#e76f51',
+      main: App.primary,
     },
     secondary: {
-      main: '#219ebc',
+      main: App.secondary,
     },
   },
   typography: {
