@@ -21,7 +21,9 @@
         "react/jsx-filename-extension": "off",
         "linebreak-style":"off",
         "import/prefer-default-export": "off",
-        "consistent-return": "off"
+        "consistent-return": "off",
+        "react/prop-types": "off",
+        "no-param-reassign": "off"
     },
     "ignorePatterns": ["*test*.js"]
 }

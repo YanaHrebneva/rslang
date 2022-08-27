@@ -1,38 +1,20 @@
-import axios from 'axios';
+import axios from '../utils/axios';
 
-const baseUrl = 'https://rslang-yanahrebneva.herokuapp.com';
-
-const instance = axios.create({
-  baseURL: baseUrl,
-});
-
-export const path = {
-  users: '/users',
+const paths = {
   signIn: '/signin',
+  users: '/users',
 };
-
-const errorHandler = (err) => ({
-  successful: false,
-  code: err.response.status,
-  message: err.response.data,
-});
 
 export default class UserService {
   static login(email, password) {
-    return instance.post(path.signIn, { email, password })
-      .then((resp) => ({
-        successful: true,
-        data: resp.data,
-      }))
-      .catch(errorHandler);
+    return axios.post(paths.signIn, { email, password });
   }
 
   static registration(name, email, password) {
-    return instance.post(path.users, { name, email, password })
-      .then((resp) => ({
-        successful: true,
-        data: resp.data,
-      }))
-      .catch(errorHandler);
+    return axios.post(paths.users, { name, email, password });
+  }
+
+  static getUser(userId) {
+    return axios.get(`${paths.users}/${userId}`);
   }
 }

@@ -9,21 +9,24 @@ import StatisticPage from './pages/StatisticPage';
 import Error from './pages/Error';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
+import { AuthProvider } from './hooks/useAuth';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route exact path="/" element={<Navigate to="/home" />} />
-        <Route index path="home" element={<HomePage />} />
-        <Route path="book" element={<BookPage />} />
-        <Route path="minigame" element={<MinigamePage />} />
-        <Route path="statistic" element={<StatisticPage />} />
-        <Route path="login" element={<Login />} />
-        <Route path="registration" element={<Registration />} />
-        <Route path="*" element={<Error />} />
-      </Route>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route exact path="/" element={<Navigate to="/home" />} />
+          <Route index path="home" element={<HomePage />} />
+          <Route path="book" element={<BookPage />} />
+          <Route path="minigame" element={<MinigamePage />} />
+          <Route path="statistic" element={<StatisticPage />} />
+          <Route path="login" element={<Login />} />
+          <Route path="registration" element={<Registration />} />
+          <Route path="*" element={<Error />} />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 export default App;

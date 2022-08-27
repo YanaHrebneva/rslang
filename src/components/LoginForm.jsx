@@ -4,41 +4,43 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useNavigate, Link } from 'react-router-dom';
-import UserService from '../services/UserService';
+import { Link } from 'react-router-dom';
+// import UserService from '../services/UserService';
 import { isValidEmail } from '../utils/validator';
 import errorMessages from '../constants/errorMessages';
+import useAuth from '../hooks/useAuth';
 
 export default function LoginForm() {
-  const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
+  const [validationError, setValidationError] = useState('');
+  // const navigate = useNavigate();
+  const { login, error } = useAuth();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
+    const email = data.get('email');
+    const password = data.get('password');
+
     if (!isValidEmail(data.get('email'))) {
-      return setErrorMessage(errorMessages.INVALID_EMAIL);
+      return setValidationError(errorMessages.INVALID_EMAIL);
     }
 
-    const result = await UserService.login(data.get('email'), data.get('password'));
-    if (result.successful) {
-      localStorage.setItem('auth-token', result.data.token);
-      localStorage.setItem('refresh-token', result.data.refreshToken);
-      navigate('/home');
-    } else {
-      switch (result.code) {
-        case 403:
-          setErrorMessage(errorMessages.INCORRECT_CREDENTIALS);
-          break;
-        case 404:
-          setErrorMessage(errorMessages.USER_NOT_FOUND);
-          break;
-        default:
-          setErrorMessage(errorMessages.SERVER_ERROR);
-      }
-    }
+    login({ email, password });
   };
+  let loginError = '';
+  if (error) {
+    switch (error.code) {
+      case 403:
+        loginError = errorMessages.INCORRECT_CREDENTIALS;
+        break;
+      case 404:
+        loginError = errorMessages.USER_NOT_FOUND;
+        break;
+      default:
+        loginError = errorMessages.SERVER_ERROR;
+    }
+  }
 
   return (
     <Container component="main" maxWidth="sm">
@@ -78,7 +80,7 @@ export default function LoginForm() {
             autoComplete="current-password"
           />
           <Typography variant="error">
-            {errorMessage}
+            {validationError || loginError}
           </Typography>
           <Button
             type="submit"
