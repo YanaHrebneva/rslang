@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
+import UserApi from '../../services/GetUserWords';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
@@ -15,15 +16,16 @@ export default function BookPage() {
 
   const { user } = useAuth();
   const hasUser = !!user;
-  // WordService.addWordToUser(wordId, user.userId)
 
+  // WordService.addWordToUser(wordId, user.userId)
+  UserApi.getUserWords();
   useEffect(() => {
     axios.get(`${baseUrl}group=${groups - 1}&page=${page - 1}`).then(({ data }) => {
       const allWords = data;
       setWords(allWords);
       const pageQtyLength = allWords.length;
       setPageQty(pageQtyLength);
-    });
+    }).catch((error) => error.message);
   }, [page, groups]);
 
   return (

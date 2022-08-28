@@ -20,6 +20,7 @@ function ButtonsActions({ urlArr, hasUser }) {
       a++;
     }
   };
+
   return (
     <>
       <Button onClick={autoPlay}>Play</Button>
