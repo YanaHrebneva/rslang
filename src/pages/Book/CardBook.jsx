@@ -4,8 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, CardActions } from '@mui/material';
-import { ButtonPlay } from './ButtonPlay';
 import { BASE_URL } from '../../constants/url';
+import ButtonsActions from './ButtonsActions';
 
 export default function CardBook(props) {
   const {
@@ -43,7 +43,7 @@ export default function CardBook(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <ButtonPlay urlArr={[audio, audioExample, audioMeaning]} />
+        <ButtonsActions urlArr={[audio, audioMeaning, audioExample]} />
       </CardActions>
     </Card>
   );

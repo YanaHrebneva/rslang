@@ -4,6 +4,7 @@ import {
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CardsBook from './CardsBook';
+import useAuth from '../../hooks/useAuth';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
@@ -11,6 +12,11 @@ export default function BookPage() {
   const [groups, setGroups] = useState(1);
   const [pageQty, setPageQty] = useState(0);
   const baseUrl = 'https://rslang-yanahrebneva.herokuapp.com/words?';
+
+  const { user } = useAuth();
+  console.log(!!user);
+  const isUser = !!user;
+  // WordService.addWordToUser(wordId, user.userId)
 
   useEffect(() => {
     axios.get(`${baseUrl}group=${groups - 1}&page=${page - 1}`).then(({ data }) => {
@@ -42,7 +48,7 @@ export default function BookPage() {
           />
         )}
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          <CardsBook words={words} />
+          <CardsBook user={isUser} words={words} />
         </Grid>
       </Stack>
     </Container>
