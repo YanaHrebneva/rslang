@@ -38,6 +38,11 @@ button {
     border-radius: 40px;
     border: none;
     cursor: pointer;
+    transition: 0.8s linear
+}
+
+button:hover {
+    background-color: var(--color-title-font);
 }
 
 .main-img {
