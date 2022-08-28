@@ -1,3 +1,4 @@
+
 .appWrapper {
 	display: flex;
 	flex-direction: column;
@@ -19,5 +20,18 @@ main {
 footer {
   text-align: center;
 	flex: 0 0 auto;
+}
+
+.link{
+  color: var(--color-menu-font);
+
+  &:hover {
+    color: var(--color-title-font);
+  }
+}
+
+:export {
+	primary: #ac3b61;
+  secondary: #123C69;
 }
 
