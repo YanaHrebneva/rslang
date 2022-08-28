@@ -5,7 +5,7 @@ function Button(props) {
     onClick, title, children, disabled = false,
   } = props;
   return (
-    // eslint-disable-next-line react/button-has-type
+  // eslint-disable-next-line react/button-has-type
     <button {...props} onClick={onClick} disabled={disabled} title={title}>{children}</button>
   );
 }

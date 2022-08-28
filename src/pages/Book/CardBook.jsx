@@ -11,7 +11,7 @@ export default function CardBook(props) {
   const {
     word, transcription, image, textMeaning,
     textMeaningTranslate, textExampleTranslate,
-    textExample, audio, audioExample, audioMeaning,
+    textExample, audio, audioExample, audioMeaning, hasUser,
   } = props;
 
   return (
@@ -43,7 +43,7 @@ export default function CardBook(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <ButtonsActions urlArr={[audio, audioMeaning, audioExample]} />
+        <ButtonsActions hasUser={hasUser} urlArr={[audio, audioMeaning, audioExample]} />
       </CardActions>
     </Card>
   );

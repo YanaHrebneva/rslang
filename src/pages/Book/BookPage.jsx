@@ -14,8 +14,7 @@ export default function BookPage() {
   const baseUrl = 'https://rslang-yanahrebneva.herokuapp.com/words?';
 
   const { user } = useAuth();
-  console.log(!!user);
-  const isUser = !!user;
+  const hasUser = !!user;
   // WordService.addWordToUser(wordId, user.userId)
 
   useEffect(() => {
@@ -48,7 +47,8 @@ export default function BookPage() {
           />
         )}
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          <CardsBook user={isUser} words={words} />
+          {console.log(hasUser) }
+          <CardsBook hasUser={hasUser} words={words} />
         </Grid>
       </Stack>
     </Container>

@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import React from 'react';
 import { BASE_URL } from '../../constants/url';
 
-function ButtonsActions({ urlArr }) {
+function ButtonsActions({ urlArr, hasUser }) {
   const arr = [...urlArr];
   const allAudio = arr.map((fileMp3) => new Audio(BASE_URL + fileMp3));
 
@@ -20,12 +20,11 @@ function ButtonsActions({ urlArr }) {
       a++;
     }
   };
-
   return (
     <>
       <Button onClick={autoPlay}>Play</Button>
-      <Button>compound word</Button>
-      <Button>learned word</Button>
+      <Button disabled={!hasUser}>compound word</Button>
+      <Button disabled={!hasUser}>learned word</Button>
     </>
   );
 }
