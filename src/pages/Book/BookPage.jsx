@@ -15,7 +15,6 @@ export default function BookPage() {
   useEffect(() => {
     axios.get(`${baseUrl}group=${groups - 1}&page=${page - 1}`).then(({ data }) => {
       const allWords = data;
-      console.log(data);
       setWords(allWords);
       const pageQtyLength = allWords.length;
       setPageQty(pageQtyLength);

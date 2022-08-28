@@ -7,11 +7,13 @@ import { CardActionArea, CardActions } from '@mui/material';
 import { ButtonPlay } from './ButtonPlay';
 import { BASE_URL } from '../../constants/url';
 
-export default function CardBook({
-  word, transcription, image,
-  textMeaning, textMeaningTranslate,
-  textExampleTranslate, textExample, audio, audioExample, audioMeaning,
-}) {
+export default function CardBook(props) {
+  const {
+    word, transcription, image, textMeaning,
+    textMeaningTranslate, textExampleTranslate,
+    textExample, audio, audioExample, audioMeaning,
+  } = props;
+
   return (
     <Card sx={{
       maxWidth: 350,
@@ -29,21 +31,19 @@ export default function CardBook({
           <Typography gutterBottom variant="h5" component="div">
             {`${word} ${transcription}`}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="hsubtitle1" component="div" />
-          <Typography gutterBottom variant="hsubtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle1" component="div" />
+          <Typography gutterBottom variant="subtitle2" component="div">
             {textMeaningTranslate}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="hsubtitle1" component="div" />
-          <Typography gutterBottom variant="hsubtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="subtitle1" component="div" />
+          <Typography gutterBottom variant="subtitle2" component="div">
             {textExampleTranslate}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary" />
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <ButtonPlay urlArr={[audio, audioExample, audioMeaning]} size="small" color="primary">
-          Play
-        </ButtonPlay>
+        <ButtonPlay urlArr={[audio, audioExample, audioMeaning]} />
       </CardActions>
     </Card>
   );
