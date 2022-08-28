@@ -7,10 +7,13 @@ header {
   align-items: center;
 }
 
+a {
+	text-decoration: none;
+}
+
 nav > a {
 	font-size: 1.25rem;
 	color: var(--color-menu-font);
-	text-decoration: none;
 	padding: 0 1rem;
 }
 

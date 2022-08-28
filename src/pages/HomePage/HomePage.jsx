@@ -37,6 +37,38 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      <div className="team-block">
+        <h2 className="block-title">О команде</h2>
+        <span className="main-text">встречай разработчиков LearnEnglish</span>
+        <div className="team-wrapper">
+          <img className="main-img" src="assets/images/CoffeeDoddle.png" alt="" />
+          <div className="team">
+            <div className="team-member">
+              <div className="team-member-img team-member-andy"> </div>
+              <div>
+                <span className="team-member-name">AndrewMatsiash</span>
+                <p className="team-member-text">Текст о том какие мы молодцы и как много сделали</p>
+              </div>
+            </div>
+
+            <div className="team-member">
+              <div className="team-member-img team-member-nastya"> </div>
+              <div>
+                <span className="team-member-name">nastagh</span>
+                <p className="team-member-text">Текст о том какие мы молодцы и как много сделали</p>
+              </div>
+            </div>
+
+            <div className="team-member">
+              <div className="team-member-img team-member-yana"> </div>
+              <div>
+                <span className="team-member-name">YanaHrebneva</span>
+                <p className="team-member-text">Текст о том какие мы молодцы и как много сделали</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
