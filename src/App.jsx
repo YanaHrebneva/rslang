@@ -4,7 +4,8 @@ import './App.scss';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage/HomePage';
 import BookPage from './pages/BookPage';
-import MinigamePage from './pages/MinigamePage';
+import AudioCall from './pages/AudioCall';
+import Sprint from './pages/Sprint';
 import StatisticPage from './pages/StatisticPage';
 import Error from './pages/Error';
 import Login from './pages/Login/Login';
@@ -19,7 +20,8 @@ function App() {
           <Route exact path="/" element={<Navigate to="/home" />} />
           <Route index path="home" element={<HomePage />} />
           <Route path="book" element={<BookPage />} />
-          <Route path="minigame" element={<MinigamePage />} />
+          <Route path="audio-call" element={<AudioCall />} />
+          <Route path="sprint" element={<Sprint />} />
           <Route path="statistic" element={<StatisticPage />} />
           <Route path="login" element={<Login />} />
           <Route path="registration" element={<Registration />} />

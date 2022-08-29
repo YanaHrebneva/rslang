@@ -12,7 +12,7 @@ export default function HomePage() {
             Нескучное онлайн-обучение английскому
             языку с помощью игр и интересных заданий в любое удобное для вас время
           </p>
-          <Link to="/book"><button type="button">Начать заниматься</button></Link>
+          <Link to="/book"><button className="main-button" type="button">Начать заниматься</button></Link>
         </div>
         <img className="main-img" src="assets/images/FloatDoodle.png" alt="main" />
       </div>

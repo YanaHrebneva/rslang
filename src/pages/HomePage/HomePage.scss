@@ -28,7 +28,7 @@
     margin-bottom: 3rem;
 }
 
-button {
+.main-button {
     width: 250px;
     height: 63px;
     background-color: var(--color-menu-font);
@@ -41,7 +41,7 @@ button {
     transition: 0.8s linear
 }
 
-button:hover {
+.main-button:hover {
     background-color: var(--color-title-font);
 }
 
