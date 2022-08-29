@@ -9,30 +9,40 @@ import { mainTheme } from '../../utils/theme';
 export default function Login() {
   return (
     <ThemeProvider theme={mainTheme}>
-
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
+      <Box
+        height="100%"
+        display="flex"
+        aligthItems="center"
       >
-        <Grid item xs={7}>
-          <Box
-            component="img"
-            sx={{
-              maxWidth: { xs: 550, md: 450 },
-            }}
-            src="/assets/images/login-img.jpg"
-            alt="tet"
-          />
-          <Typography variant="h2">
-            Изучать слова удобнее, если у вас есть профиль
-            {/* Продолжай свое путешествие в мире английского языка вместе с нами! */}
-          </Typography>
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          padding="2rem 20rem"
+        >
+          <Grid item xs={7}>
+            <Box
+              component="img"
+              sx={{
+                maxWidth: { xs: 550, md: 450 },
+              }}
+              src="/assets/images/LayingDoodle.png"
+              alt="tet"
+            />
+            <Typography
+              variant="h4"
+              fontSize="2rem"
+              color="#123C69"
+            >
+              Изучать слова удобнее, если у вас есть профиль
+              {/* Продолжай свое путешествие в мире английского языка вместе с нами! */}
+            </Typography>
+          </Grid>
+          <Grid item xs={5}>
+            <LoginForm />
+          </Grid>
         </Grid>
-        <Grid item xs={5}>
-          <LoginForm />
-        </Grid>
-      </Grid>
+      </Box>
     </ThemeProvider>
 
   );
