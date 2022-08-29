@@ -17,5 +17,9 @@ export const mainTheme = createTheme({
     fontFamily: [
       'Gilroy',
     ].join(','),
+    h4: {
+      fontSize: '2rem',
+      color: '#123C69',
+    },
   },
 });
