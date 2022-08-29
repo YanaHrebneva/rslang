@@ -1,5 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import Footer from './footer/footer';
 import Header from './header/header';
 
 export default function Layout() {
@@ -9,7 +10,7 @@ export default function Layout() {
       <main className="main">
         <Outlet />
       </main>
-      <footer className="footer"> RSS 2022</footer>
+      <Footer />
     </div>
   );
 }
