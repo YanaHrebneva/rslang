@@ -23,7 +23,8 @@ export default function Header() {
       <nav>
         <Link to="/home">Главная</Link>
         <Link to="/book">Учебник</Link>
-        <Link to="/minigame">Игры</Link>
+        <Link to="/audio-call">Аудиовызов</Link>
+        <Link to="/sprint">Спринт</Link>
         <Link to="/statistic">Статистика</Link>
       </nav>
       {user
