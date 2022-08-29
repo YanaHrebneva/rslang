@@ -24,11 +24,7 @@ export default function Registration() {
           direction="column"
         >
           <Grid item>
-            <Typography
-              variant="h4"
-              fontSize="2rem"
-              color="#123C69"
-            >
+            <Typography variant="h4">
               Зарегистрируйся и изучай английский вместе с нами
             </Typography>
           </Grid>

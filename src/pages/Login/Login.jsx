@@ -29,11 +29,7 @@ export default function Login() {
               src="/assets/images/LayingDoodle.png"
               alt="tet"
             />
-            <Typography
-              variant="h4"
-              fontSize="2rem"
-              color="#123C69"
-            >
+            <Typography variant="h4">
               Изучать слова удобнее, если у вас есть профиль
               {/* Продолжай свое путешествие в мире английского языка вместе с нами! */}
             </Typography>
