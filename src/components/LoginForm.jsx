@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link } from 'react-router-dom';
 // import UserService from '../services/UserService';
-import { isValidEmail } from '../utils/validator';
+import { isValidEmail, isValidPassword } from '../utils/validator';
 import errorMessages from '../constants/errorMessages';
 import useAuth from '../hooks/useAuth';
 
@@ -24,6 +24,10 @@ export default function LoginForm() {
 
     if (!isValidEmail(data.get('email'))) {
       return setValidationError(errorMessages.INVALID_EMAIL);
+    }
+
+    if (!isValidPassword(data.get('password'))) {
+      return setValidationError(errorMessages.EMPTY_PASSWORD);
     }
 
     login({ email, password });
