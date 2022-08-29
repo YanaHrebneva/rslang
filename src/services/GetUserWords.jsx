@@ -7,28 +7,24 @@ const paths = {
 };
 
 export default class UserApi {
-  static getUserWords() {
-    const currentToken = localStorage.getItem('auth-token');
-    const id = JSON.parse(localStorage.getItem('user-data')).userId;
-
-    if (id && currentToken) {
-      return axios.get(`${BASE_URL}${paths.users}${id}${paths.words}`)
-        .then(({ data }) => data)
-        .catch((error) => console.error(error), {
-          headers: {
-            Authorization: `Bearer ${currentToken}`,
-            Accept: 'application/json',
-          },
-        });
+  static async getUserWords(userId) {
+    if (userId) {
+      const response = await axios.get(`${BASE_URL}${paths.users}${userId}${paths.words}`).then(({ data }) => data)
+        .catch((error) => console.error(error));
+      return response;
     }
     return 'please signing';
   }
 
-  // static registration(name, email, password) {
-  //   return axios.post(paths.users, { name, email, password });
-  // }
-
-  // static getUser(userId) {
-  //   return axios.get(`${paths.users}/${userId}`);
-  // }
+  static async addedUserHardWord(userId, wordId) {
+    if (userId) {
+      axios.post(`${BASE_URL}${paths.users}${userId}${paths.words}/${wordId}`, {
+        difficulty: 'hard',
+        optional: {},
+      })
+        .then(() => console.log('added hard word'))
+        .catch((error) => console.error(error));
+    }
+    return 'please signing';
+  }
 }

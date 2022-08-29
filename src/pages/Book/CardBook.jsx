@@ -9,16 +9,18 @@ import ButtonsActions from './ButtonsActions';
 
 export default function CardBook(props) {
   const {
+    id,
     word, transcription, image, textMeaning,
     textMeaningTranslate, textExampleTranslate,
-    textExample, audio, audioExample, audioMeaning, hasUser,
+    textExample, audio, audioExample, audioMeaning, user,
   } = props;
-
   return (
-    <Card sx={{
-      maxWidth: 350,
-      minHeight: 1,
-    }}
+    <Card
+      id={id}
+      sx={{
+        maxWidth: 350,
+        minHeight: 1,
+      }}
     >
       <CardActionArea>
         <CardMedia
@@ -43,7 +45,7 @@ export default function CardBook(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <ButtonsActions hasUser={hasUser} urlArr={[audio, audioMeaning, audioExample]} />
+        <ButtonsActions id={id} user={user} urlArr={[audio, audioMeaning, audioExample]} />
       </CardActions>
     </Card>
   );
