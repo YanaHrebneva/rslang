@@ -12,12 +12,14 @@ export default function Header() {
   // WordService.addWordToUser(wordId, user.userId)
   return (
     <header className="header">
-      <span className="logo">
-        <span className="logo-blue">l</span>
-        earn
-        <span className="logo-blue">e</span>
-        nglish
-      </span>
+      <Link to="/home">
+        <span className="logo">
+          <span className="logo-blue">l</span>
+          earn
+          <span className="logo-blue">e</span>
+          nglish
+        </span>
+      </Link>
       <nav>
         <Link to="/home">Главная</Link>
         <Link to="/book">Учебник</Link>

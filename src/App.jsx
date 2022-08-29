@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import Layout from './components/Layout';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import BookPage from './pages/BookPage';
 import MinigamePage from './pages/MinigamePage';
 import StatisticPage from './pages/StatisticPage';
