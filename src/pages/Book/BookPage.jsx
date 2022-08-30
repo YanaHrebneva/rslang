@@ -5,26 +5,32 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
+import UserApi from '../../services/GetUserWords';
+
+const baseUrl = 'https://rslang-yanahrebneva.herokuapp.com/words?';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
   const [page, setPage] = useState(1);
   const [groups, setGroups] = useState(1);
-  const [pageQty, setPageQty] = useState(0);
-  const baseUrl = 'https://rslang-yanahrebneva.herokuapp.com/words?';
-
+  const [hasHardWords, setHasHardWord] = useState(false);
   const { user } = useAuth();
 
   // WordService.addWordToUser(wordId, user.userId)
 
   useEffect(() => {
-    axios.get(`${baseUrl}group=${groups - 1}&page=${page - 1}`).then(({ data }) => {
-      const allWords = data;
-      setWords(allWords);
-      const pageQtyLength = allWords.length;
-      setPageQty(pageQtyLength);
-    }).catch((error) => error.message);
+    axios.get(`${baseUrl}group=${groups - 1}&page=${page - 1}`)
+      .then(({ data }) => { const allWords = data; setWords(allWords); })
+      .catch((error) => error.message);
+    setHasHardWord(false);
   }, [page, groups]);
+
+  useEffect(() => {
+    if (hasHardWords) {
+      UserApi.getUserAggregatedWords(user.id)
+        .then((resHardWords) => setWords(resHardWords.data[0].paginatedResults));
+    }
+  }, [hasHardWords]);
 
   return (
     <Container>
@@ -34,11 +40,12 @@ export default function BookPage() {
       <Button onClick={() => { setGroups(4); setPage(1); }} variant="contained">group 4</Button>
       <Button onClick={() => { setGroups(5); setPage(1); }} variant="contained">group 5</Button>
       <Button onClick={() => { setGroups(6); setPage(1); }} variant="contained">group 6</Button>
-      <Button onClick={() => { setGroups(7); setPage(1); }} disabled={!user} variant="contained">Hard words</Button>
+      <Button onClick={() => { setHasHardWord(true); }} disabled={!user} variant="contained">Hard words</Button>
       <Stack spacing={2}>
-        {!!pageQty && (
+        {!!words && (
         <Pagination
-          count={30}
+          count={words.length !== 20 ? 1 : 30}
+          size="large"
           page={page}
           onChange={(_, num) => setPage(num)}
           showLastButton

@@ -14,6 +14,7 @@ export default function CardBook(props) {
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, user,
   } = props;
+
   return (
     <Card
       id={id}
