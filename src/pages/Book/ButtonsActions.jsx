@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import { BASE_URL } from '../../constants/url';
-import UserApi from '../../services/GetUserWords';
+import UserApi from '../../services/UserApi';
 
 function ButtonsActions({ urlArr, user, id }) {
   const arr = [...urlArr];
@@ -18,10 +18,7 @@ function ButtonsActions({ urlArr, user, id }) {
       await Play(allAudio[i]);
     }
   };
-  // (async () => {
-  //   const a = await UserApi.getUserWords();
-  //   console.log(a);
-  // })();
+
   return (
     <>
       <Button onClick={autoPlay}>Play</Button>

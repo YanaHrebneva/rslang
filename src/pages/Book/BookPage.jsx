@@ -1,36 +1,41 @@
 import {
   Button, Container, Grid, Pagination, Stack,
 } from '@mui/material';
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import axios, { baseUrl } from '../../utils/axios';
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
-import UserApi from '../../services/GetUserWords';
-
-const baseUrl = 'https://rslang-yanahrebneva.herokuapp.com/words?';
+import UserApi from '../../services/UserApi';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
   const [page, setPage] = useState(1);
   const [groups, setGroups] = useState(1);
-  const [hasHardWords, setHasHardWord] = useState(false);
   const { user } = useAuth();
 
-  // WordService.addWordToUser(wordId, user.userId)
-
+  const filters = {
+    filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
+  };
   useEffect(() => {
-    axios.get(`${baseUrl}group=${groups - 1}&page=${page - 1}`)
-      .then(({ data }) => { const allWords = data; setWords(allWords); })
+    if (user) {
+      UserApi.getUserAggregatedWords(user.id, 20, { $and: [{ page: page - 1, group: groups - 1 }] })
+        .then(({ data }) => {
+          const { paginatedResults } = data[0];
+          setWords(paginatedResults);
+        });
+      return;
+    }
+    axios.get(`${baseUrl}/group=${groups - 1}&page=${page - 1}`)
+      .then(({ data }) => { setWords(data); })
       .catch((error) => error.message);
-    setHasHardWord(false);
   }, [page, groups]);
 
   useEffect(() => {
-    if (hasHardWords) {
-      UserApi.getUserAggregatedWords(user.id)
+    if (groups === 7) {
+      UserApi.getUserAggregatedWords(user.id, 40, filters.filtersHard)
         .then((resHardWords) => setWords(resHardWords.data[0].paginatedResults));
     }
-  }, [hasHardWords]);
+  }, [groups === 7]);
 
   return (
     <Container>
@@ -40,7 +45,7 @@ export default function BookPage() {
       <Button onClick={() => { setGroups(4); setPage(1); }} variant="contained">group 4</Button>
       <Button onClick={() => { setGroups(5); setPage(1); }} variant="contained">group 5</Button>
       <Button onClick={() => { setGroups(6); setPage(1); }} variant="contained">group 6</Button>
-      <Button onClick={() => { setHasHardWord(true); }} disabled={!user} variant="contained">Hard words</Button>
+      <Button onClick={() => { setGroups(7); }} disabled={!user} variant="contained">Hard words</Button>
       <Stack spacing={2}>
         {!!words && (
         <Pagination

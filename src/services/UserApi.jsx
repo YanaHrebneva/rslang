@@ -1,6 +1,5 @@
-import axios from '../utils/axios';
+import axios, { baseUrl } from '../utils/axios';
 
-const BASE_URL = 'https://rslang-yanahrebneva.herokuapp.com/';
 const paths = {
   users: 'users/',
   words: '/words/',
@@ -10,7 +9,7 @@ const paths = {
 export default class UserApi {
   static async getUserWords(userId) {
     if (userId) {
-      const response = await axios.get(`${BASE_URL}${paths.users}${userId}${paths.words}`)
+      const response = await axios.get(`${baseUrl}/${paths.users}${userId}${paths.words}`)
         .catch((error) => console.error(error));
       return response;
     }
@@ -18,9 +17,8 @@ export default class UserApi {
   }
 
   static async addedUserHardWord(userId, wordId) {
-    console.log(userId, wordId);
     if (userId) {
-      return axios.post(`${BASE_URL}${paths.users}${userId}${paths.words}/${wordId}`, {
+      return axios.post(`${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`, {
         difficulty: 'hard',
         optional: {},
       })
@@ -32,27 +30,26 @@ export default class UserApi {
 
   static async getUserAggregatedWord(userId, wordId) {
     if (userId) {
-      return axios.get(`${BASE_URL}${paths.users}${userId}${paths.aggregatedWords}${wordId}`)
+      return axios.get(`${baseUrl}/${paths.users}${userId}${paths.aggregatedWords}${wordId}`)
         .then(() => console.log('I have hard word'))
         .catch((error) => console.error(error));
     }
     return 'please signing';
   }
 
-  static async getUserAggregatedWords(userId) {
+  static async getUserAggregatedWords(userId, wordsPerPage, filter) {
     if (userId) {
       return axios.get(
-        `${BASE_URL}${paths.users}${userId}${paths.aggregatedWords}`,
-        { params: { filter: { 'userWord.difficulty': 'hard' }, wordsPerPage: 40 } },
+        `${baseUrl}/${paths.users}${userId}${paths.aggregatedWords}`,
+        { params: { wordsPerPage, filter } },
       ).catch((error) => console.error(error));
     }
-    return 'please signing';
   }
 
   static async deleteUserWord(userId, wordId) {
     if (userId) {
       axios.delete(
-        `${BASE_URL}${paths.users}${userId}${paths.words}/${wordId}`,
+        `${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`,
       ).catch((error) => console.error(error));
     }
     return 'please signing';
