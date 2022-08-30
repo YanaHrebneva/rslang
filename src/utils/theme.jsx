@@ -19,7 +19,14 @@ export const mainTheme = createTheme({
     ].join(','),
     h4: {
       fontSize: '2rem',
-      color: '#123C69',
+      color: App.secondary,
+    },
+    h3: {
+      color: App.secondary,
+    },
+    subtitle1: {
+      fontFamily: 'Gilroy Regular',
+      fontSize: '1.5rem',
     },
   },
 });
