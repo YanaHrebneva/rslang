@@ -3,7 +3,9 @@ import React from 'react';
 import { BASE_URL } from '../../constants/url';
 import UserApi from '../../services/UserApi';
 
-function ButtonsActions({ urlArr, user, id }) {
+function ButtonsActions({
+  urlArr, user, id, difficulty,
+}) {
   const arr = [...urlArr];
   const allAudio = arr.map((fileMp3) => new Audio(BASE_URL + fileMp3));
 
@@ -26,7 +28,7 @@ function ButtonsActions({ urlArr, user, id }) {
         onClick={() => UserApi.addedUserHardWord(user.id, id)}
         disabled={!user}
       >
-        hard word
+        {difficulty ? 'hard word' : 'added hard word'}
 
       </Button>
       <Button disabled={!user}>learned word</Button>

@@ -2,10 +2,10 @@ import {
   Button, Container, Grid, Pagination, Stack,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import axios, { baseUrl } from '../../utils/axios';
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
+import noUserApi from '../../services/noUserApi';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
@@ -15,19 +15,18 @@ export default function BookPage() {
 
   const filters = {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
+    filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
   useEffect(() => {
     if (user) {
-      UserApi.getUserAggregatedWords(user.id, 20, { $and: [{ page: page - 1, group: groups - 1 }] })
+      UserApi.getUserAggregatedWords(user.userId || user.id, 20, filters.filtersPageGroup)
         .then(({ data }) => {
           const { paginatedResults } = data[0];
           setWords(paginatedResults);
         });
       return;
     }
-    axios.get(`${baseUrl}/group=${groups - 1}&page=${page - 1}`)
-      .then(({ data }) => { setWords(data); })
-      .catch((error) => error.message);
+    noUserApi.getWords(groups, page).then(({ data }) => setWords(data));
   }, [page, groups]);
 
   useEffect(() => {

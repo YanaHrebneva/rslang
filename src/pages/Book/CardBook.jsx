@@ -9,12 +9,13 @@ import ButtonsActions from './ButtonsActions';
 
 export default function CardBook(props) {
   const {
+    userWord,
     id,
     word, transcription, image, textMeaning,
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, user,
   } = props;
-
+  console.log(userWord?.difficulty);
   return (
     <Card
       id={id}
@@ -46,7 +47,12 @@ export default function CardBook(props) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <ButtonsActions id={id} user={user} urlArr={[audio, audioMeaning, audioExample]} />
+        <ButtonsActions
+          difficulty={userWord?.difficulty}
+          id={id}
+          user={user}
+          urlArr={[audio, audioMeaning, audioExample]}
+        />
       </CardActions>
     </Card>
   );
