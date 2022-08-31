@@ -62,9 +62,12 @@ export default function BookPage() {
           sx={{ marginY: 3, marginX: 'auto' }}
         />
         )}
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          <CardsBook toggleState={toggleState} user={user} words={words} />
-        </Grid>
+        <Container maxWidth="lg">
+          <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <CardsBook groups={groups} toggleState={toggleState} user={user} words={words} />
+          </Grid>
+        </Container>
+
       </Stack>
     </Container>
   );

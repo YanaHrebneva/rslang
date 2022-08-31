@@ -1,10 +1,10 @@
 import { Button } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { BASE_URL } from '../../constants/url';
 import UserApi from '../../services/UserApi';
 
 function ButtonsActions({
-  urlArr, user, id, difficulty, toggleState,
+  urlArr, user, id, toggleState, groups,
 }) {
   const arr = [...urlArr];
   const allAudio = arr.map((fileMp3) => new Audio(BASE_URL + fileMp3));
@@ -20,56 +20,76 @@ function ButtonsActions({
       await Play(allAudio[i]);
     }
   };
-  const toggleHardEasyWord = async () => {
-    switch (difficulty) {
-      case !difficulty:
-        await UserApi.addedUserHardWord(user.id, id);
-        toggleState();
-        break;
-      case 'hard':
-        await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
-        toggleState();
-        break;
-      case 'easy':
-        await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
-        toggleState();
-        break;
+  // const toggleHardEasyWord = async (params = difficulty) => {
+  //   const complexity = params;
+  //   switch (complexity) {
+  //     case 'hard':
+  //       await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
+  //       toggleState();
+  //       break;
+  //     case 'easy':
+  //       await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
+  //       toggleState();
+  //       break;
 
-      default:
-        break;
-    }
+  //     default:
+  //       break;
+  //   }
 
-    // if (!difficulty) {
-    //   await UserApi.addedUserHardWord(user.id, id);
-    //   toggleState();
-    //   return;
-    // }
-    // if (difficulty === 'hard') {
-    //   console.log('easy');
-    //   await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
-    //   toggleState();
-    //   return;
-    // }
-    // if (difficulty === 'easy') {
-    //   console.log('hard');
-    //   await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
-    //   toggleState();
-    // }
+  // if (!difficulty) {
+  //   await UserApi.addedUserHardWord(user.id, id);
+  //   toggleState();
+  //   return;
+  // }
+  // if (difficulty === 'hard') {
+  //   console.log('easy');
+  //   await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
+  //   toggleState();
+  //   return;
+  // }
+  // if (difficulty === 'easy') {
+  //   console.log('hard');
+  //   await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
+  //   toggleState();
+  // }
+  // };
+  const [btnState, setBtnState] = useState(false);
+  const createStateWord = async (stateWord) => {
+    await UserApi.createStateWordUser(user.id, id, stateWord);
+    toggleState();
+    setBtnState(true);
+  };
+
+  const changeStateWord = async (stateWord) => {
+    await UserApi.changeStateWordUser(user.id, id, stateWord);
+    toggleState();
+    setBtnState(true);
   };
 
   return (
     <>
       <Button onClick={autoPlay}>Play</Button>
-      <Button
-        onClick={() => toggleHardEasyWord()}
-        disabled={!user}
-      >
-        {difficulty === 'hard' ? 'hard word' : 'add hard word'}
-
-      </Button>
-      <Button onClick={() => toggleHardEasyWord()} disabled={!user}>
-        {difficulty === 'hard' ? 'add easy' : 'easy'}
-      </Button>
+      {user ? (
+        <>
+          <Button
+            onClick={() => (groups === 7 ? changeStateWord('easy') : createStateWord('hard'))}
+            disabled={btnState}
+          >
+            {groups === 7 ? 'del hard' : 'add hard'}
+          </Button>
+          <Button
+            disabled={btnState}
+            onClick={() => (groups === 7 ? changeStateWord('easy') : createStateWord('easy'))}
+          >
+            learned
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button disabled={!user}>add hard</Button>
+          <Button disabled={!user}>easy word</Button>
+        </>
+      )}
     </>
   );
 }

@@ -9,9 +9,11 @@ import ButtonsActions from './ButtonsActions';
 
 export default function CardBook(props) {
   const {
+    groups,
     toggleState,
     userWord,
     id,
+    wordTranslate,
     word, transcription, image, textMeaning,
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, user,
@@ -23,9 +25,9 @@ export default function CardBook(props) {
       case !difficulty:
         break;
       case 'hard':
-        return ({ backgroundColor: 'green' });
-      case 'easy':
         return ({ backgroundColor: 'red' });
+      case 'easy':
+        return ({ backgroundColor: 'green' });
       default:
         break;
     }
@@ -35,25 +37,25 @@ export default function CardBook(props) {
     <Card
       id={id}
       sx={[
-        {
-          maxWidth: 350,
-          minHeight: 1,
-        },
+        { height: '100%', display: 'flex', flexDirection: 'column' },
         // console.log(toggleStyle()),
         toggleStyle(),
 
       ]}
     >
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image={`${BASE_URL}${image}`}
-          alt={word}
-        />
+      <CardMedia
+        component="img"
+        image={`${BASE_URL}${image}`}
+        alt={word}
+      />
+      <CardActionArea sx={{ flexGrow: 1 }}>
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {`${word} ${transcription}`}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            {`${wordTranslate}`}
           </Typography>
           <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle1" component="div" />
           <Typography gutterBottom variant="subtitle2" component="div">
@@ -66,10 +68,11 @@ export default function CardBook(props) {
           <Typography variant="subtitle2" color="text.secondary" />
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
         <ButtonsActions
           toggleState={toggleState}
           difficulty={userWord?.difficulty}
+          groups={groups}
           id={id}
           user={user}
           urlArr={[audio, audioMeaning, audioExample]}
