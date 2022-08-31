@@ -28,10 +28,21 @@ export default class UserApi {
     return 'please signing';
   }
 
+  static async toggleDifficultyUserWord(userId, wordId, difficulty) {
+    if (userId) {
+      return axios.put(`${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`, {
+        difficulty: `${difficulty}`,
+        optional: {},
+      })
+        .then(() => console.log(`added ${difficulty} word`))
+        .catch((error) => console.error(error));
+    }
+    return 'please signing';
+  }
+
   static async getUserAggregatedWord(userId, wordId) {
     if (userId) {
       return axios.get(`${baseUrl}/${paths.users}${userId}${paths.aggregatedWords}${wordId}`)
-        .then(() => console.log('I have hard word'))
         .catch((error) => console.error(error));
     }
     return 'please signing';

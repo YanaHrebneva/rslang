@@ -10,13 +10,18 @@ import noUserApi from '../../services/noUserApi';
 export default function BookPage() {
   const [words, setWords] = useState([]);
   const [page, setPage] = useState(1);
+  const [state, setToggleState] = useState(false);
   const [groups, setGroups] = useState(1);
   const { user } = useAuth();
-
   const filters = {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
+
+  const toggleState = () => {
+    setToggleState(!state);
+  };
+
   useEffect(() => {
     if (user) {
       UserApi.getUserAggregatedWords(user.userId || user.id, 20, filters.filtersPageGroup)
@@ -27,14 +32,14 @@ export default function BookPage() {
       return;
     }
     noUserApi.getWords(groups, page).then(({ data }) => setWords(data));
-  }, [page, groups]);
+  }, [page, groups, state]);
 
   useEffect(() => {
     if (groups === 7) {
       UserApi.getUserAggregatedWords(user.id, 40, filters.filtersHard)
         .then((resHardWords) => setWords(resHardWords.data[0].paginatedResults));
     }
-  }, [groups === 7]);
+  }, [groups === 7, state]);
 
   return (
     <Container>
@@ -58,7 +63,7 @@ export default function BookPage() {
         />
         )}
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          <CardsBook user={user} words={words} />
+          <CardsBook toggleState={toggleState} user={user} words={words} />
         </Grid>
       </Stack>
     </Container>

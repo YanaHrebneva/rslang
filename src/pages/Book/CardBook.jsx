@@ -9,20 +9,40 @@ import ButtonsActions from './ButtonsActions';
 
 export default function CardBook(props) {
   const {
+    toggleState,
     userWord,
     id,
     word, transcription, image, textMeaning,
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, user,
   } = props;
-  console.log(userWord?.difficulty);
+
+  const toggleStyle = () => {
+    const difficulty = userWord?.difficulty;
+    switch (difficulty) {
+      case !difficulty:
+        break;
+      case 'hard':
+        return ({ backgroundColor: 'green' });
+      case 'easy':
+        return ({ backgroundColor: 'red' });
+      default:
+        break;
+    }
+  };
+
   return (
     <Card
       id={id}
-      sx={{
-        maxWidth: 350,
-        minHeight: 1,
-      }}
+      sx={[
+        {
+          maxWidth: 350,
+          minHeight: 1,
+        },
+        // console.log(toggleStyle()),
+        toggleStyle(),
+
+      ]}
     >
       <CardActionArea>
         <CardMedia
@@ -48,6 +68,7 @@ export default function CardBook(props) {
       </CardActionArea>
       <CardActions>
         <ButtonsActions
+          toggleState={toggleState}
           difficulty={userWord?.difficulty}
           id={id}
           user={user}

@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import React from 'react';
 import CardBook from './CardBook';
 
-export default function CardsBook({ words, user }) {
+export default function CardsBook({ words, user, toggleState }) {
   return (
     words.map((word) => {
       // eslint-disable-next-line no-underscore-dangle
@@ -10,7 +10,7 @@ export default function CardsBook({ words, user }) {
 
       return (
         <Grid item xs={2} sm={4} md={4} key={wordWithId.id}>
-          <CardBook user={user} {...wordWithId} />
+          <CardBook toggleState={toggleState} user={user} {...wordWithId} />
         </Grid>
       );
     })
