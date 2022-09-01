@@ -3,7 +3,7 @@ import React from 'react';
 import CardBook from './CardBook';
 
 export default function CardsBook({
-  words, user, toggleState, groups,
+  words, user, toggleState, groups, userId,
 }) {
   return (
     words.map((word) => {
@@ -12,7 +12,13 @@ export default function CardsBook({
 
       return (
         <Grid item xs={12} sm={6} md={4} key={wordWithId.id}>
-          <CardBook groups={groups} toggleState={toggleState} user={user} {...wordWithId} />
+          <CardBook
+            groups={groups}
+            userId={userId}
+            toggleState={toggleState}
+            user={user}
+            {...wordWithId}
+          />
         </Grid>
       );
     })

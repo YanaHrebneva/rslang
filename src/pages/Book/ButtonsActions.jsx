@@ -1,10 +1,10 @@
 import { Button } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import { BASE_URL } from '../../constants/url';
 import UserApi from '../../services/UserApi';
 
 function ButtonsActions({
-  urlArr, user, id, toggleState, groups,
+  urlArr, userId, id, toggleState, groups, difficulty,
 }) {
   const arr = [...urlArr];
   const allAudio = arr.map((fileMp3) => new Audio(BASE_URL + fileMp3));
@@ -53,43 +53,83 @@ function ButtonsActions({
   //   toggleState();
   // }
   // };
-  const [btnState, setBtnState] = useState(false);
   const createStateWord = async (stateWord) => {
-    await UserApi.createStateWordUser(user.id, id, stateWord);
+    await UserApi.createStateWordUser(userId, id, stateWord);
     toggleState();
-    setBtnState(true);
   };
 
   const changeStateWord = async (stateWord) => {
-    await UserApi.changeStateWordUser(user.id, id, stateWord);
+    await UserApi.changeStateWordUser(userId, id, stateWord);
     toggleState();
-    setBtnState(true);
   };
 
-  return (
-    <>
-      <Button onClick={autoPlay}>Play</Button>
-      {user ? (
+  const styleHardBtn = () => {
+    switch (difficulty) {
+      case 'hard':
+        return ({ color: 'white', backgroundColor: 'red', border: '1px solid red' });
+      case 'easy':
+        return ({ color: 'grey', border: '1px solid red' });
+      default:
+        return ({ color: 'red', border: '1px solid red' });
+    }
+  };
+  const styleEasyBtn = () => {
+    switch (difficulty) {
+      case 'hard':
+        return ({ color: 'grey', border: '1px solid green' });
+      case 'easy':
+        return ({ border: 'green', color: 'white', backgroundColor: 'green' });
+      default:
+        return ({ color: 'green', border: '1px solid green' });
+    }
+  };
+  if (userId) {
+    if (groups === 7) {
+      return (
         <>
+          <Button onClick={autoPlay}>Play</Button>
           <Button
-            onClick={() => (groups === 7 ? changeStateWord('easy') : createStateWord('hard'))}
-            disabled={btnState}
+            onClick={() => (changeStateWord('easy'))}
+            style={{ border: '1px solid red', color: 'red' }}
           >
-            {groups === 7 ? 'del hard' : 'add hard'}
+            del hard
           </Button>
           <Button
-            disabled={btnState}
-            onClick={() => (groups === 7 ? changeStateWord('easy') : createStateWord('easy'))}
+            disabled
+            onClick={() => (changeStateWord('easy'))}
+            style={{ color: 'grey', border: '1px solid green' }}
           >
             learned
           </Button>
         </>
-      ) : (
-        <>
-          <Button disabled={!user}>add hard</Button>
-          <Button disabled={!user}>easy word</Button>
-        </>
-      )}
+      );
+    }
+
+    return (
+      <>
+        <Button onClick={autoPlay}>Play</Button>
+        <Button
+          onClick={() => (createStateWord('hard'))}
+          disabled={difficulty === 'easy'}
+          style={styleHardBtn()}
+        >
+          {(difficulty !== 'easy' && 'hard' ? 'add hard' : 'hard')}
+        </Button>
+        <Button
+          disabled={difficulty === 'hard' || difficulty === 'easy'}
+          onClick={() => (createStateWord('easy'))}
+          style={styleEasyBtn()}
+        >
+          learned
+        </Button>
+      </>
+    );
+  }
+  return (
+    <>
+      <Button onClick={autoPlay}>Play</Button>
+      <Button disabled={!userId}>add hard</Button>
+      <Button disabled={!userId}>easy word</Button>
     </>
   );
 }

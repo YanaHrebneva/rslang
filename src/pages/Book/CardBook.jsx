@@ -16,7 +16,7 @@ export default function CardBook(props) {
     wordTranslate,
     word, transcription, image, textMeaning,
     textMeaningTranslate, textExampleTranslate,
-    textExample, audio, audioExample, audioMeaning, user,
+    textExample, audio, audioExample, audioMeaning, userId,
   } = props;
 
   const toggleStyle = () => {
@@ -25,9 +25,9 @@ export default function CardBook(props) {
       case !difficulty:
         break;
       case 'hard':
-        return ({ backgroundColor: 'red' });
+        return ({ boxShadow: '-1px 5px 17px 4px rgba(172, 6, 6, 0.2)' });
       case 'easy':
-        return ({ backgroundColor: 'green' });
+        return ({ boxShadow: '-1px 5px 17px 4px rgba(31, 172, 6, 0.2) ' });
       default:
         break;
     }
@@ -37,7 +37,9 @@ export default function CardBook(props) {
     <Card
       id={id}
       sx={[
-        { height: '100%', display: 'flex', flexDirection: 'column' },
+        {
+          height: '100%', display: 'flex', flexDirection: 'column', boxShadow: 4,
+        },
         // console.log(toggleStyle()),
         toggleStyle(),
 
@@ -49,7 +51,6 @@ export default function CardBook(props) {
         alt={word}
       />
       <CardActionArea sx={{ flexGrow: 1 }}>
-
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {`${word} ${transcription}`}
@@ -74,7 +75,7 @@ export default function CardBook(props) {
           difficulty={userWord?.difficulty}
           groups={groups}
           id={id}
-          user={user}
+          userId={userId}
           urlArr={[audio, audioMeaning, audioExample]}
         />
       </CardActions>
