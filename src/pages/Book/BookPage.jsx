@@ -2,6 +2,7 @@ import {
   Button, Container, Grid, Pagination, Stack,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+// import styles from './bookPage.module.css';
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
@@ -12,13 +13,15 @@ export default function BookPage() {
   const [page, setPage] = useState(1);
   const [state, setToggleState] = useState(false);
   const [groups, setGroups] = useState(1);
+
   const { user } = useAuth();
-  const userId = user.userId || user.id;
+  const userId = user?.userId || user?.id;
   const filters = {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
 
+  const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
   const toggleState = () => {
     setToggleState(!state);
   };
@@ -41,9 +44,9 @@ export default function BookPage() {
         .then((resHardWords) => setWords(resHardWords.data[0].paginatedResults));
     }
   }, [groups === 7, state]);
-  console.log(words.length);
+
   return (
-    <Container>
+    <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { backgroundColor: 'green' } : { backgroundColor: 'transparent' }}>
       <Button onClick={() => { setGroups(1); setPage(1); }} variant="contained">group 1</Button>
       <Button onClick={() => { setGroups(2); setPage(1); }} variant="contained">group 2</Button>
       <Button onClick={() => { setGroups(3); setPage(1); }} variant="contained">group 3</Button>
@@ -55,6 +58,7 @@ export default function BookPage() {
         {!!words && (
         <Pagination
           count={groups === 7 ? 1 : 30}
+          color={stateDifficultyWords() ? 'primary' : 'secondary'}
           size="large"
           page={page}
           onChange={(_, num) => setPage(num)}
@@ -65,7 +69,12 @@ export default function BookPage() {
         )}
         <Container maxWidth="lg">
           <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
-            <CardsBook groups={groups} toggleState={toggleState} userId={userId} words={words} />
+            <CardsBook
+              groups={groups}
+              toggleState={toggleState}
+              userId={userId}
+              words={words}
+            />
           </Grid>
         </Container>
 
