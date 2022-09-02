@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
+import { useLocation } from 'react-router-dom';
 import { mainTheme } from '../../utils/theme';
 import LevelPick from '../../components/LevelPick';
 import WordsService from '../../services/WordsService';
@@ -36,8 +37,21 @@ export default function AudioCall() {
   const [currentStep, setCurrentStep] = useState(1);
   const [words, setWords] = useState([]);
   const [gameScore, setGameScore] = useState();
-  // console.log(gameScore);
-  // if (gameScore) gameScore.filter((el) => console.log(el.right));
+  const { state } = useLocation();
+  const [initialLoad, setInitialLoad] = useState(true);
+
+  useEffect(() => {
+    if (state.page && state.groups) {
+      WordsService.getWords(state.groups - 1, state.page - 1)
+        .then((result) => {
+          setWords(result.data);
+          setCurrentStep(2);
+          setInitialLoad(false);
+        });
+    } else {
+      setInitialLoad(false);
+    }
+  }, [state]);
 
   const iterateGameStep = () => {
     setCurrentStep(currentStep + 1);
@@ -83,7 +97,7 @@ export default function AudioCall() {
 
   return (
     <ThemeProvider theme={mainTheme}>
-      {gameComponent}
+      {!initialLoad && gameComponent}
     </ThemeProvider>
 
   );
