@@ -41,7 +41,7 @@ export default function AudioCall() {
   const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
-    if (state.page && state.groups) {
+    if (state?.page && state?.groups) {
       WordsService.getWords(state.groups - 1, state.page - 1)
         .then((result) => {
           setWords(result.data);
