@@ -17,15 +17,15 @@
         "react"
     ],
     "rules": {
-			"react-router-dom": "off",
-			"react/jsx-filename-extension": "off",
-			"linebreak-style": "off",
-			"import/prefer-default-export": "off",
-			"consistent-return": "off",
-			"react/jsx-props-no-spreading": "off",
-			"react/prop-types": 0,
+        "react-router-dom": "off",
+        "react/jsx-filename-extension": "off",
+        "linebreak-style": "off",
+        "import/prefer-default-export": "off",
+        "consistent-return": "off",
+        "react/jsx-props-no-spreading": "off",
         "react/prop-types": "off",
-        "no-param-reassign": "off"
-		},
+        "no-param-reassign": "off",
+        "prefer-destructuring": "off"
+    },
     "ignorePatterns": ["*test*.js"]
 }

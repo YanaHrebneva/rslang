@@ -9,6 +9,9 @@ export const mainTheme = createTheme({
     secondary: {
       main: App.secondary,
     },
+    third: {
+      main: App.grey,
+    },
   },
   typography: {
     error: {
@@ -28,5 +31,10 @@ export const mainTheme = createTheme({
       fontFamily: 'Gilroy Regular',
       fontSize: '1.5rem',
     },
+    textError: {
+      fontSize: '1.5rem',
+      color: App.primary,
+    },
+
   },
 });
