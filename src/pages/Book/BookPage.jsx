@@ -23,8 +23,7 @@ export default function BookPage() {
   const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
   const toggleState = () => setToggleState(!state);
 
-    localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page]));
-  
+  localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page]));
 
   useEffect(() => {
     if (user) {
