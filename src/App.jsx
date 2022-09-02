@@ -3,7 +3,6 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import './App.scss';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage/HomePage';
-import BookPage from './pages/BookPage';
 import AudioCall from './pages/AudioCall';
 import Sprint from './pages/Sprint';
 import StatisticPage from './pages/StatisticPage';
