@@ -9,6 +9,9 @@ export const mainTheme = createTheme({
     secondary: {
       main: App.secondary,
     },
+    third: {
+      main: App.grey,
+    },
   },
   typography: {
     error: {
@@ -19,7 +22,19 @@ export const mainTheme = createTheme({
     ].join(','),
     h4: {
       fontSize: '2rem',
-      color: '#123C69',
+      color: App.secondary,
     },
+    h3: {
+      color: App.secondary,
+    },
+    subtitle1: {
+      fontFamily: 'Gilroy Regular',
+      fontSize: '1.5rem',
+    },
+    textError: {
+      fontSize: '1.5rem',
+      color: App.primary,
+    },
+
   },
 });

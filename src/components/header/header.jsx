@@ -25,7 +25,8 @@ export default function Header() {
         <Link to="/book">Учебник</Link>
         <Link to="/audio-call">Аудиовызов</Link>
         <Link to="/sprint">Спринт</Link>
-        <Link to="/statistic">Статистика</Link>
+        {user && <Link to="/statistic">Статистика</Link>}
+
       </nav>
       {user
         ? (

@@ -3,6 +3,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 // import styles from './bookPage.module.css';
+import { useNavigate } from 'react-router-dom';
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
@@ -14,6 +15,8 @@ export default function BookPage() {
   const [state, setToggleState] = useState(false);
   const [groups, setGroups] = useState(() => (JSON.parse(localStorage.getItem('userSessionPageGroup')) ? JSON.parse(localStorage.getItem('userSessionPageGroup'))[0] : 1));
   const { user } = useAuth();
+  const navigate = useNavigate();
+
   const userId = user?.userId || user?.id;
   const filters = {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
@@ -54,6 +57,13 @@ export default function BookPage() {
       <Button onClick={() => { setGroups(6); setPage(1); }} variant="contained">group 6</Button>
       <Button onClick={() => { setGroups(7); }} disabled={!user} variant="contained">Hard words</Button>
       <Stack spacing={2}>
+
+        <Button onClick={() => {
+          navigate('/audio-call', { state: { page, groups } });
+        }}
+        >
+          GAME
+        </Button>
         {!!words && (
         <Pagination
           count={groups === 7 ? 1 : 30}
