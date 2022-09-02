@@ -113,7 +113,7 @@ function ButtonsActions({
           disabled={difficulty === 'easy'}
           style={styleHardBtn()}
         >
-          {(difficulty !== 'easy' && 'hard' ? 'add hard' : 'hard')}
+          {(difficulty !== 'easy' && difficulty !== 'hard' ? 'add hard' : 'hard')}
         </Button>
         <Button
           disabled={difficulty === 'hard' || difficulty === 'easy'}

@@ -10,21 +10,21 @@ import noUserApi from '../../services/noUserApi';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState((() => (JSON.parse(localStorage.getItem('userSessionPageGroup')) ? JSON.parse(localStorage.getItem('userSessionPageGroup'))[1] : 1)));
   const [state, setToggleState] = useState(false);
-  const [groups, setGroups] = useState(1);
-
+  const [groups, setGroups] = useState(() => (JSON.parse(localStorage.getItem('userSessionPageGroup')) ? JSON.parse(localStorage.getItem('userSessionPageGroup'))[0] : 1));
   const { user } = useAuth();
   const userId = user?.userId || user?.id;
   const filters = {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
-
+  console.log(JSON.parse(localStorage.getItem('userSessionPageGroup')) || 10000);
   const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
-  const toggleState = () => {
-    setToggleState(!state);
-  };
+  const toggleState = () => setToggleState(!state);
+
+    localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page]));
+  
 
   useEffect(() => {
     if (user) {
@@ -46,7 +46,7 @@ export default function BookPage() {
   }, [groups === 7, state]);
 
   return (
-    <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { backgroundColor: 'green' } : { backgroundColor: 'transparent' }}>
+    <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
       <Button onClick={() => { setGroups(1); setPage(1); }} variant="contained">group 1</Button>
       <Button onClick={() => { setGroups(2); setPage(1); }} variant="contained">group 2</Button>
       <Button onClick={() => { setGroups(3); setPage(1); }} variant="contained">group 3</Button>
@@ -58,7 +58,7 @@ export default function BookPage() {
         {!!words && (
         <Pagination
           count={groups === 7 ? 1 : 30}
-          color={stateDifficultyWords() ? 'primary' : 'secondary'}
+          color={stateDifficultyWords() ? 'secondary' : 'primary'}
           size="large"
           page={page}
           onChange={(_, num) => setPage(num)}
