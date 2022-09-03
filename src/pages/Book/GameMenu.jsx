@@ -22,7 +22,7 @@ export default function GameMenu({ page, groups }) {
   // };
 
   return (
-    <div>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -57,6 +57,6 @@ export default function GameMenu({ page, groups }) {
         </MenuItem>
 
       </Menu>
-    </div>
+    </>
   );
 }
