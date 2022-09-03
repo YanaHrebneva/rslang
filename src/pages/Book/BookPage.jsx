@@ -1,15 +1,16 @@
 import {
-  Button, Container, Grid, Pagination, Stack, ThemeProvider,
+  Container, Grid, Pagination, Stack, ThemeProvider,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 // import styles from './bookPage.module.css';
-import { useNavigate } from 'react-router-dom';
+
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
 import noUserApi from '../../services/noUserApi';
 import ButtonsNavGroups from './ButtonsNavGroups';
 import { mainTheme } from '../../utils/theme';
+import GameMenu from './GameMenu';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
@@ -17,7 +18,6 @@ export default function BookPage() {
   const [state, setToggleState] = useState(false);
   const [groups, setGroups] = useState(() => (JSON.parse(localStorage.getItem('userSessionPageGroup')) ? JSON.parse(localStorage.getItem('userSessionPageGroup'))[0] : 1));
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   const userId = user?.userId || user?.id;
   const filters = {
@@ -53,12 +53,7 @@ export default function BookPage() {
     <ThemeProvider theme={mainTheme}>
       <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
         <ButtonsNavGroups user={userId} groups={groups} setGroups={setGroups} setPage={setPage} />
-        <Button onClick={() => {
-          navigate('/audio-call', { state: { page, groups } });
-        }}
-        >
-          GAME
-        </Button>
+        <GameMenu page={page} groups={groups} />
         <Stack spacing={2}>
           {!!words && (
           <Pagination
