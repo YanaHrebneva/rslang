@@ -37,11 +37,9 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
 
   const showNextWord = () => {
     result.push({
-      word: words[0].word,
-      id: words[0].id,
       right: selectedWord.right,
-      audio: words[0].audio,
       translate: words[0].wordTranslate,
+      ...words[0],
     });
     words.shift();
     setSelectedWord(null);
