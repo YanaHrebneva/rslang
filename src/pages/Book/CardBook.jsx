@@ -58,12 +58,12 @@ export default function CardBook(props) {
           <Typography gutterBottom variant="h5" component="div">
             {`${wordTranslate}`}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle1" component="div" />
-          <Typography gutterBottom variant="subtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle2" component="div" />
+          <Typography gutterBottom variant="subtitle4" component="div">
             {textMeaningTranslate}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="subtitle1" component="div" />
-          <Typography gutterBottom variant="subtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="subtitle2" component="div" />
+          <Typography gutterBottom variant="subtitle4" component="div">
             {textExampleTranslate}
           </Typography>
           <Typography variant="subtitle2" color="text.secondary" />

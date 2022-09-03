@@ -1,5 +1,5 @@
 import {
-  Button, Container, Grid, Pagination, Stack,
+  Button, Container, Grid, Pagination, Stack, ThemeProvider,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 // import styles from './bookPage.module.css';
@@ -8,6 +8,8 @@ import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
 import noUserApi from '../../services/noUserApi';
+import ButtonsNavGroups from './ButtonsNavGroups';
+import { mainTheme } from '../../utils/theme';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
@@ -22,11 +24,11 @@ export default function BookPage() {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
-  console.log(JSON.parse(localStorage.getItem('userSessionPageGroup')) || 10000);
+
   const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
   const toggleState = () => setToggleState(!state);
 
-  localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page]));
+  useEffect(() => localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page])), [page, groups]);
 
   useEffect(() => {
     if (user) {
@@ -48,46 +50,41 @@ export default function BookPage() {
   }, [groups === 7, state]);
 
   return (
-    <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
-      <Button onClick={() => { setGroups(1); setPage(1); }} variant="contained">group 1</Button>
-      <Button onClick={() => { setGroups(2); setPage(1); }} variant="contained">group 2</Button>
-      <Button onClick={() => { setGroups(3); setPage(1); }} variant="contained">group 3</Button>
-      <Button onClick={() => { setGroups(4); setPage(1); }} variant="contained">group 4</Button>
-      <Button onClick={() => { setGroups(5); setPage(1); }} variant="contained">group 5</Button>
-      <Button onClick={() => { setGroups(6); setPage(1); }} variant="contained">group 6</Button>
-      <Button onClick={() => { setGroups(7); }} disabled={!user} variant="contained">Hard words</Button>
-      <Stack spacing={2}>
-
+    <ThemeProvider theme={mainTheme}>
+      <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
+        <ButtonsNavGroups user={userId} groups={groups} setGroups={setGroups} setPage={setPage} />
         <Button onClick={() => {
           navigate('/audio-call', { state: { page, groups } });
         }}
         >
           GAME
         </Button>
-        {!!words && (
-        <Pagination
-          count={groups === 7 ? 1 : 30}
-          color={stateDifficultyWords() ? 'secondary' : 'primary'}
-          size="large"
-          page={page}
-          onChange={(_, num) => setPage(num)}
-          showLastButton
-          showFirstButton
-          sx={{ marginY: 3, marginX: 'auto' }}
-        />
-        )}
-        <Container maxWidth="lg">
-          <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
-            <CardsBook
-              groups={groups}
-              toggleState={toggleState}
-              userId={userId}
-              words={words}
-            />
-          </Grid>
-        </Container>
+        <Stack spacing={2}>
+          {!!words && (
+          <Pagination
+            count={groups === 7 ? 1 : 30}
+            color={stateDifficultyWords() ? 'primary' : 'secondary'}
+            size="large"
+            page={page}
+            onChange={(_, num) => setPage(num)}
+            showLastButton
+            showFirstButton
+            sx={{ marginY: 3, marginX: 'auto' }}
+          />
+          )}
+          <Container maxWidth="lg">
+            <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
+              <CardsBook
+                groups={groups}
+                toggleState={toggleState}
+                userId={userId}
+                words={words}
+              />
+            </Grid>
+          </Container>
+        </Stack>
+      </Container>
+    </ThemeProvider>
 
-      </Stack>
-    </Container>
   );
 }
