@@ -10,11 +10,16 @@ import AudioScore from '../../components/AudioScore';
 import {
   generateRandomIndexes, getRandomIndexesExceptCurrent, mix, randomNumber,
 } from '../../utils/random';
+import useAuth from '../../hooks/useAuth';
+import UserApi from '../../services/UserApi';
 
 const generateGameSetup = (wordsArray) => {
-  const gameWordsIndexes = generateRandomIndexes(10)
+  const gameWordsIndexes = generateRandomIndexes(
+    Math.min(wordsArray.length, 10),
+    Math.min(wordsArray.length, 20),
+  )
     .map((i) => ({
-      variants: getRandomIndexesExceptCurrent(20, 4, i),
+      variants: getRandomIndexesExceptCurrent(Math.min(wordsArray.length, 20), 4, i),
       index: i,
     }));
 
@@ -39,15 +44,53 @@ export default function AudioCall() {
   const [gameScore, setGameScore] = useState();
   const { state } = useLocation();
   const [initialLoad, setInitialLoad] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (state?.page && state?.groups) {
-      WordsService.getWords(state.groups - 1, state.page - 1)
-        .then((result) => {
-          setWords(result.data);
-          setCurrentStep(2);
-          setInitialLoad(false);
+      if (user) {
+        UserApi.getUserAggregatedWords(
+          user.id,
+          20,
+          {
+            $and: [{ page: state.page - 1, group: state.groups - 1 },
+              { $or: [{ userWord: null }, { 'userWord.difficulty': { $ne: 'easy' } }] }],
+          },
+        ).then((result) => {
+          if (result.data[0].paginatedResults.length < 20) {
+            UserApi.getUserAggregatedWords(
+              user.id,
+              20 - result.data[0].paginatedResults.length,
+              {
+                $and: [{ page: { $lte: state.page - 2 }, group: state.groups - 1 },
+                  { $or: [{ userWord: null }, { 'userWord.difficulty': { $ne: 'easy' } }] }],
+              },
+            ).then((additional) => {
+              const allWords = [
+                ...result.data[0].paginatedResults,
+                ...additional.data[0].paginatedResults,
+              ].map((w) => ({ ...w, id: w._id }));
+              setInitialLoad(false);
+              if (!allWords.length) {
+                return setCurrentStep(4);
+              }
+              setWords(allWords);
+              setCurrentStep(2);
+            });
+          } else {
+            setWords(result.data[0].paginatedResults.map((w) => ({ ...w, id: w._id })));
+            setCurrentStep(2);
+            setInitialLoad(false);
+          }
         });
+      } else {
+        WordsService.getWords(state.groups - 1, state.page - 1)
+          .then((result) => {
+            setWords(result.data);
+            setCurrentStep(2);
+            setInitialLoad(false);
+          });
+      }
     } else {
       setInitialLoad(false);
     }
@@ -58,13 +101,52 @@ export default function AudioCall() {
   };
 
   const handleGroupSelect = async (groupId) => {
-    const result = await WordsService.getWords(groupId, randomNumber(0, 29));
-    setWords(result.data);
+    let result = [];
+    if (user) {
+      result = (await UserApi.getUserAggregatedWords(
+        user.id,
+        20,
+        { $and: [{ page: 1, group: groupId }] },
+      )).data[0].paginatedResults.map((w) => ({ ...w, id: w._id }));
+    } else {
+      result = (await WordsService.getWords(groupId, randomNumber(0, 29))).data;
+    }
+    setWords(result);
     iterateGameStep();
   };
 
   const handleGameEnd = (result) => {
     setGameScore(result);
+
+    result.filter((w) => w.right).forEach((w) => {
+      if (w.userWord) {
+        const repeatTimes = (w.userWord.optional?.repeat || 0);
+        let difficulty = 'medium';
+        if ((repeatTimes >= 2 && w.userWord.difficulty === 'medium')
+        || (repeatTimes >= 4 && w.userWord.difficulty === 'hard')) {
+          difficulty = 'easy';
+        }
+
+        UserApi.changeStateWordUser(user.id, w.id, difficulty, {
+          repeat: repeatTimes + 1,
+        });
+      } else {
+        UserApi.createStateWordUser(user.id, w.id, 'medium', { repeat: 1 });
+      }
+    });
+
+    result.filter((w) => !w.right).forEach((w) => {
+      if (w.userWord) {
+        UserApi.changeStateWordUser(
+          user.id,
+          w.id,
+          w.userWord.difficulty === 'hard' ? 'hard' : 'medium',
+          {
+            repeat: 0,
+          },
+        );
+      }
+    });
     iterateGameStep();
   };
 
@@ -74,6 +156,11 @@ export default function AudioCall() {
 
   let gameComponent = '';
   switch (currentStep) {
+    case 4:
+      gameComponent = (
+        <>Все слова изучены</>
+      );
+      break;
     case 3:
       gameComponent = (
         <AudioScore gameScore={gameScore} onPlayAgain={handlePlayAgain} />
