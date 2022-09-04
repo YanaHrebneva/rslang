@@ -18,6 +18,7 @@ export default function CardBook(props) {
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, userId,
   } = props;
+  const numberRepeatedWord = userWord?.optional?.repeat;
 
   const toggleStyle = () => {
     const difficulty = userWord?.difficulty;
@@ -69,7 +70,8 @@ export default function CardBook(props) {
       </CardActionArea>
       <Box style={userId ? { visibility: 'visible' } : { visibility: 'hidden' }}>
         <Typography gutterBottom variant="subtitle2" component="div">
-          использовано:0
+          использовано:
+          {numberRepeatedWord || 0 }
         </Typography>
         <Typography gutterBottom variant="subtitle2" component="div">
           угадано:0
