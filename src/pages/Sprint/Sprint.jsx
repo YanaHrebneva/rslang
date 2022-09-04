@@ -14,7 +14,7 @@ import {
 const generateGameSetup = (wordsArray) => {
   const gameWordsIndexes = generateRandomIndexes(10)
     .map((i) => ({
-      variants: getRandomIndexesExceptCurrent(20, 4, i),
+      variants: getRandomIndexesExceptCurrent(20, 1, i),
       index: i,
     }));
 
@@ -41,6 +41,7 @@ export default function Sprint() {
   const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
+    console.log('bbbbbb');
     if (state?.page && state?.groups) {
       WordsService.getWords(state.groups - 1, state.page - 1)
         .then((result) => {
