@@ -103,6 +103,7 @@ export default function AudioCall() {
 
   const handleGroupSelect = async (groupId) => {
     let result = [];
+
     if (user) {
       result = (await UserApi.getUserAggregatedWords(
         user.id,
@@ -116,7 +117,7 @@ export default function AudioCall() {
     iterateGameStep();
   };
 
-  const statistics = async (count) => {
+  const updateStatistics = async (count) => {
     if (user) {
       let countLearnedWords;
       let countAudioCall;
@@ -162,7 +163,6 @@ export default function AudioCall() {
 
       result.filter((w) => !w.right).forEach((w) => {
         if (w.userWord) {
-
           const useWord = (w.userWord.optional?.useWord || 0);
 
           UserApi.changeStateWordUser(
@@ -179,8 +179,7 @@ export default function AudioCall() {
         }
       });
     }
-    statistics(result.filter((el) => el.right).length);
-
+    updateStatistics(result.filter((el) => el.right).length);
   };
 
   const handlePlayAgain = () => {

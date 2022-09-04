@@ -43,7 +43,6 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
     }
 
     if (!selectedWord && (e.key === 'Enter' || e.key === 'NumpadEnter')) {
-
       showAnswers();
       document.removeEventListener('keypress', handleKeyPress);
     }
@@ -52,7 +51,6 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       document.removeEventListener('keypress', handleKeyPress);
     }
   };
-
 
   const audio = new Audio(`${baseUrl}/${words[0].audio}`);
 

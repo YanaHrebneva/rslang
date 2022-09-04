@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
     if (result.successful) {
       localStorage.setItem('auth-token', result.data.token);
       localStorage.setItem('refresh-token', result.data.refreshToken);
-      const userData = { userId: result.data.userId, name: result.data.name };
+      const userData = { id: result.data.userId, name: result.data.name };
       localStorage.setItem('user-data', JSON.stringify(userData));
       setUser(userData);
       navigate('/home');
