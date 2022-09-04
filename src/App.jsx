@@ -4,7 +4,7 @@ import './App.scss';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage/HomePage';
 import AudioCall from './pages/AudioCall/AudioCall';
-import Sprint from './pages/Sprint';
+import Sprint from './pages/Sprint/Sprint';
 import StatisticPage from './pages/StatisticPage';
 import Error from './pages/Error';
 import Login from './pages/Login/Login';
