@@ -92,14 +92,14 @@ function ButtonsActions({
             onClick={() => (changeStateWord('easy'))}
             style={{ border: '1px solid red', color: 'red' }}
           >
-            del hard
+            удалить из раздела
           </Button>
           <Button
             disabled
             onClick={() => (changeStateWord('easy'))}
             style={{ color: 'grey', border: '1px solid green' }}
           >
-            learned
+            изучено
           </Button>
         </>
       );
@@ -107,29 +107,29 @@ function ButtonsActions({
 
     return (
       <>
-        <Button onClick={autoPlay}>Play</Button>
+        <Button onClick={autoPlay}>слушать</Button>
         <Button
           onClick={() => (createStateWord('hard'))}
           disabled={difficulty === 'easy'}
           style={styleHardBtn()}
         >
-          {(difficulty !== 'easy' && difficulty !== 'hard' ? 'add hard' : 'hard')}
+          {(difficulty !== 'easy' && difficulty !== 'hard' ? 'сложное' : 'добавлено')}
         </Button>
         <Button
           disabled={difficulty === 'hard' || difficulty === 'easy'}
           onClick={() => (createStateWord('easy'))}
           style={styleEasyBtn()}
         >
-          learned
+          изучено
         </Button>
       </>
     );
   }
   return (
     <>
-      <Button onClick={autoPlay}>Play</Button>
-      <Button disabled={!userId}>add hard</Button>
-      <Button disabled={!userId}>easy word</Button>
+      <Button onClick={autoPlay}>слушать</Button>
+      <Button disabled={!userId}>сложное</Button>
+      <Button disabled={!userId}>изучено</Button>
     </>
   );
 }

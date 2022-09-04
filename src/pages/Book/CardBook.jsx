@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions } from '@mui/material';
+import { Box, CardActionArea, CardActions } from '@mui/material';
 import { BASE_URL } from '../../constants/url';
 import ButtonsActions from './ButtonsActions';
 
@@ -58,17 +58,26 @@ export default function CardBook(props) {
           <Typography gutterBottom variant="h5" component="div">
             {`${wordTranslate}`}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle1" component="div" />
-          <Typography gutterBottom variant="subtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle2" component="div" />
+          <Typography gutterBottom variant="subtitle4" component="div">
             {textMeaningTranslate}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="subtitle1" component="div" />
-          <Typography gutterBottom variant="subtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="subtitle2" component="div" />
+          <Typography gutterBottom variant="subtitle4" component="div">
             {textExampleTranslate}
           </Typography>
-          <Typography variant="subtitle2" color="text.secondary" />
         </CardContent>
       </CardActionArea>
+      <Box style={userId ? { visibility: 'visible' } : { visibility: 'hidden' }}>
+        <Typography gutterBottom variant="subtitle2" component="div">
+          использовано:0
+        </Typography>
+        <Typography gutterBottom variant="subtitle2" component="div">
+          угадано:0
+        </Typography>
+
+      </Box>
+
       <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
         <ButtonsActions
           toggleState={toggleState}

@@ -1,13 +1,16 @@
 import {
-  Button, Container, Grid, Pagination, Stack,
+  Container, Grid, Pagination, Stack, ThemeProvider,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 // import styles from './bookPage.module.css';
-import { useNavigate } from 'react-router-dom';
+
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
 import noUserApi from '../../services/noUserApi';
+import ButtonsNavGroups from './ButtonsNavGroups';
+import { mainTheme } from '../../utils/theme';
+import GameMenu from './GameMenu';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
@@ -15,18 +18,20 @@ export default function BookPage() {
   const [state, setToggleState] = useState(false);
   const [groups, setGroups] = useState(() => (JSON.parse(localStorage.getItem('userSessionPageGroup')) ? JSON.parse(localStorage.getItem('userSessionPageGroup'))[0] : 1));
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   const userId = user?.userId || user?.id;
   const filters = {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
-  console.log(JSON.parse(localStorage.getItem('userSessionPageGroup')) || 10000);
-  const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
-  const toggleState = () => setToggleState(!state);
 
-  localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page]));
+  const toggleState = () => setToggleState(!state);
+  const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
+  const stateDifficultyWordsEasy = () => words.every((word) => word?.userWord?.difficulty === 'easy');
+  const allWordsSelected = stateDifficultyWords();
+  const allWordsSelectedEasy = stateDifficultyWordsEasy();
+
+  useEffect(() => localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page])), [page, groups]);
 
   useEffect(() => {
     if (user) {
@@ -48,46 +53,36 @@ export default function BookPage() {
   }, [groups === 7, state]);
 
   return (
-    <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
-      <Button onClick={() => { setGroups(1); setPage(1); }} variant="contained">group 1</Button>
-      <Button onClick={() => { setGroups(2); setPage(1); }} variant="contained">group 2</Button>
-      <Button onClick={() => { setGroups(3); setPage(1); }} variant="contained">group 3</Button>
-      <Button onClick={() => { setGroups(4); setPage(1); }} variant="contained">group 4</Button>
-      <Button onClick={() => { setGroups(5); setPage(1); }} variant="contained">group 5</Button>
-      <Button onClick={() => { setGroups(6); setPage(1); }} variant="contained">group 6</Button>
-      <Button onClick={() => { setGroups(7); }} disabled={!user} variant="contained">Hard words</Button>
-      <Stack spacing={2}>
+    <ThemeProvider theme={mainTheme}>
+      <Container sx={{ padding: '50px' }} style={allWordsSelectedEasy ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
+        <ButtonsNavGroups user={userId} groups={groups} setGroups={setGroups} setPage={setPage} />
+        <GameMenu disabled={allWordsSelectedEasy} page={page} groups={groups} />
+        <Stack spacing={2}>
+          {!!words && (
+          <Pagination
+            count={groups === 7 ? 1 : 30}
+            color={allWordsSelected ? 'primary' : 'secondary'}
+            size="large"
+            page={page}
+            onChange={(_, num) => setPage(num)}
+            showLastButton
+            showFirstButton
+            sx={{ marginY: 3, marginX: 'auto' }}
+          />
+          )}
+          <Container maxWidth="lg">
+            <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
+              <CardsBook
+                groups={groups}
+                toggleState={toggleState}
+                userId={userId}
+                words={words}
+              />
+            </Grid>
+          </Container>
+        </Stack>
+      </Container>
+    </ThemeProvider>
 
-        <Button onClick={() => {
-          navigate('/audio-call', { state: { page, groups } });
-        }}
-        >
-          GAME
-        </Button>
-        {!!words && (
-        <Pagination
-          count={groups === 7 ? 1 : 30}
-          color={stateDifficultyWords() ? 'secondary' : 'primary'}
-          size="large"
-          page={page}
-          onChange={(_, num) => setPage(num)}
-          showLastButton
-          showFirstButton
-          sx={{ marginY: 3, marginX: 'auto' }}
-        />
-        )}
-        <Container maxWidth="lg">
-          <Grid container spacing={4} columns={{ xs: 4, sm: 8, md: 12 }}>
-            <CardsBook
-              groups={groups}
-              toggleState={toggleState}
-              userId={userId}
-              words={words}
-            />
-          </Grid>
-        </Container>
-
-      </Stack>
-    </Container>
   );
 }
