@@ -25,8 +25,11 @@ export default function BookPage() {
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
 
-  const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
   const toggleState = () => setToggleState(!state);
+  const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
+  const stateDifficultyWordsEasy = () => words.every((word) => word?.userWord?.difficulty === 'easy');
+  const allWordsSelected = stateDifficultyWords();
+  const allWordsSelectedEasy = stateDifficultyWordsEasy();
 
   useEffect(() => localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page])), [page, groups]);
 
@@ -51,14 +54,14 @@ export default function BookPage() {
 
   return (
     <ThemeProvider theme={mainTheme}>
-      <Container sx={{ padding: '50px' }} style={stateDifficultyWords() ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
+      <Container sx={{ padding: '50px' }} style={allWordsSelectedEasy ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
         <ButtonsNavGroups user={userId} groups={groups} setGroups={setGroups} setPage={setPage} />
-        <GameMenu page={page} groups={groups} />
+        <GameMenu disabled={allWordsSelectedEasy} page={page} groups={groups} />
         <Stack spacing={2}>
           {!!words && (
           <Pagination
             count={groups === 7 ? 1 : 30}
-            color={stateDifficultyWords() ? 'primary' : 'secondary'}
+            color={allWordsSelected ? 'primary' : 'secondary'}
             size="large"
             page={page}
             onChange={(_, num) => setPage(num)}

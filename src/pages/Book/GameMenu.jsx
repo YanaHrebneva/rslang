@@ -4,7 +4,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 
-export default function GameMenu({ page, groups }) {
+export default function GameMenu({ page, groups, disabled }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -17,13 +17,14 @@ export default function GameMenu({ page, groups }) {
   const linkByGameAudioCall = () => {
     navigate('/audio-call', { state: { page, groups } });
   };
-  // const linkByGameSprint = () => {
-  //   navigate('/audio-call', { state: { page, groups } });
-  // };
+  const linkByGameSprint = () => {
+    navigate('/sprint', { state: { page, groups } });
+  };
 
   return (
     <>
       <Button
+        disabled={disabled}
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
@@ -49,7 +50,7 @@ export default function GameMenu({ page, groups }) {
 
         </MenuItem>
         <MenuItem onClick={() => {
-          handleClose(); linkByGameAudioCall();
+          handleClose(); linkByGameSprint();
         }}
         >
           Спринт
