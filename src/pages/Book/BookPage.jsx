@@ -22,7 +22,7 @@ export default function BookPage() {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
-  console.log(JSON.parse(localStorage.getItem('userSessionPageGroup')) || 10000);
+  // console.log(JSON.parse(localStorage.getItem('userSessionPageGroup')) || 10000);
   const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
   const toggleState = () => setToggleState(!state);
 

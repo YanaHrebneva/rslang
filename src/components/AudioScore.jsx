@@ -96,7 +96,7 @@ export default function AudioScore({ gameScore, onPlayAgain }) {
           {gameScore.filter((el) => !el.right).map((el) => {
             const audio = new Audio(`${baseUrl}/${el.audio}`);
             return (
-              <Grid container alignItems="center" justifyContent="flex-start" spacing={3}>
+              <Grid container alignItems="center" justifyContent="flex-start" spacing={3} key={el.word}>
                 <Grid item>
                   <IconButton onClick={() => audio.play()}>
                     <Avatar src="./assets/images/icon-sound.png" />
@@ -122,7 +122,7 @@ export default function AudioScore({ gameScore, onPlayAgain }) {
           {gameScore.filter((el) => el.right).map((el) => {
             const audio = new Audio(`${baseUrl}/${el.audio}`);
             return (
-              <Grid container alignItems="center" justifyContent="flex-start" spacing={3}>
+              <Grid container alignItems="center" justifyContent="flex-start" spacing={3} key={el.word}>
                 <Grid item>
                   <IconButton onClick={() => audio.play()}>
                     <Avatar src="./assets/images/icon-sound.png" />

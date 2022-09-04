@@ -116,38 +116,39 @@ export default function AudioCall() {
   };
 
   const handleGameEnd = (result) => {
-    setGameScore(result);
-
-    result.filter((w) => w.right).forEach((w) => {
-      if (w.userWord) {
-        const repeatTimes = (w.userWord.optional?.repeat || 0);
-        let difficulty = 'medium';
-        if ((repeatTimes >= 2 && w.userWord.difficulty === 'medium')
-        || (repeatTimes >= 4 && w.userWord.difficulty === 'hard')) {
-          difficulty = 'easy';
-        }
-
-        UserApi.changeStateWordUser(user.id, w.id, difficulty, {
-          repeat: repeatTimes + 1,
-        });
-      } else {
-        UserApi.createStateWordUser(user.id, w.id, 'medium', { repeat: 1 });
-      }
-    });
-
-    result.filter((w) => !w.right).forEach((w) => {
-      if (w.userWord) {
-        UserApi.changeStateWordUser(
-          user.id,
-          w.id,
-          w.userWord.difficulty === 'hard' ? 'hard' : 'medium',
-          {
-            repeat: 0,
-          },
-        );
-      }
-    });
     iterateGameStep();
+    setGameScore(result);
+    if (user) {
+      result.filter((w) => w.right).forEach((w) => {
+        if (w.userWord) {
+          const repeatTimes = (w.userWord.optional?.repeat || 0);
+          let difficulty = 'medium';
+          if ((repeatTimes >= 2 && w.userWord.difficulty === 'medium')
+          || (repeatTimes >= 4 && w.userWord.difficulty === 'hard')) {
+            difficulty = 'easy';
+          }
+
+          UserApi.changeStateWordUser(user.id, w.id, difficulty, {
+            repeat: repeatTimes + 1,
+          });
+        } else {
+          UserApi.createStateWordUser(user.id, w.id, 'medium', { repeat: 1 });
+        }
+      });
+
+      result.filter((w) => !w.right).forEach((w) => {
+        if (w.userWord) {
+          UserApi.changeStateWordUser(
+            user.id,
+            w.id,
+            w.userWord.difficulty === 'hard' ? 'hard' : 'medium',
+            {
+              repeat: 0,
+            },
+          );
+        }
+      });
+    }
   };
 
   const handlePlayAgain = () => {

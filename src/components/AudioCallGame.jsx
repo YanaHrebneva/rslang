@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Avatar, IconButton, Grid, Button, Box,
 } from '@mui/material';
@@ -6,7 +6,7 @@ import { baseUrl } from '../utils/axios';
 
 export default function AudioCallGame({ wordsPool, onEnd }) {
   const [words] = useState(wordsPool);
-  const [selectedWord, setSelectedWord] = useState();
+  const [selectedWord, setSelectedWord] = useState(null);
   const [result] = useState([]);
 
   const handleChoose = (e) => {
@@ -35,6 +35,27 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
     return 'secondary';
   };
 
+  const handleKeyPress = (e) => {
+    if (!selectedWord && Array.from(words[0].variants.keys()).includes(parseInt(e.key, 10) - 1)) {
+      const variant = words[0].variants[parseInt(e.key, 10) - 1];
+      handleChoose({ target: { value: variant.id } });
+      document.removeEventListener('keypress', handleKeyPress);
+    }
+    if (!selectedWord && e.key === 'Enter') {
+      showAnswers();
+      document.removeEventListener('keypress', handleKeyPress);
+    }
+    if (selectedWord && e.code === 'Space') {
+      showNextWord();
+      document.removeEventListener('keypress', handleKeyPress);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keypress', handleKeyPress);
+    audio.play();
+  }, [selectedWord]);
+
   const showNextWord = () => {
     result.push({
       right: selectedWord.right,
@@ -55,6 +76,7 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      onKeyPress={() => console.log('aaaaa')}
     >
       <Grid>
         {!selectedWord
@@ -88,12 +110,12 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
         </Grid>
         {selectedWord && (
           <Button onClick={showNextWord}>
-            Далее &rarr;
+            Далее (Space)
           </Button>
         )}
         {!selectedWord && (
           <Button onClick={showAnswers}>
-            Не знаю
+            Не знаю (Enter)
           </Button>
         )}
       </Grid>

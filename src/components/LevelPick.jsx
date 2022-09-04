@@ -1,7 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Typography, Button } from '@mui/material';
 
 export default function LevelPick({ title, description, onSelect }) {
+  // document.addEventListener('keydown', (e) => {
+  //   if (e.key >= 1 && e.key <= 6) {
+  //     return onSelect(e.key);
+  //   }
+  // });
+
+  useEffect(() => {
+    const onKeypress = (e) => {
+      if (e.key >= 1 && e.key <= 6) {
+        return onSelect(e.key);
+      }
+    };
+
+    document.addEventListener('keypress', onKeypress);
+
+    return () => {
+      document.removeEventListener('keypress', onKeypress);
+    };
+  }, []);
+
   return (
     <>
       <Typography variant="h3" mt={10}>
