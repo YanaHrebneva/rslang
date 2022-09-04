@@ -12,7 +12,7 @@ export default function Login() {
       <Box
         height="100%"
         display="flex"
-        aligthItems="center"
+        alignItems="center"
       >
         <Grid
           container
