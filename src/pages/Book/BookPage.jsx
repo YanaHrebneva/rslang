@@ -24,6 +24,8 @@ export default function BookPage() {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
+  const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
+  const toggleState = () => setToggleState(!state);
 
   const toggleState = () => setToggleState(!state);
   const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
