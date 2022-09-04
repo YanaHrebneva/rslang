@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Grid, Typography, Button } from '@mui/material';
 
 export default function LevelPick({ title, description, onSelect }) {
-
   const onKeypress = (e) => {
     if (e.key >= 1 && e.key <= 6) {
       return onSelect(parseInt(e.key, 10) - 1);
@@ -10,7 +9,6 @@ export default function LevelPick({ title, description, onSelect }) {
   };
 
   useEffect(() => {
-
     document.addEventListener('keypress', onKeypress);
 
     return () => {
