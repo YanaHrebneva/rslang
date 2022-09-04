@@ -41,7 +41,9 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       handleChoose({ target: { value: variant.id } });
       document.removeEventListener('keypress', handleKeyPress);
     }
-    if (!selectedWord && e.key === 'Enter') {
+
+    if (!selectedWord && (e.key === 'Enter' || e.key === 'NumpadEnter')) {
+
       showAnswers();
       document.removeEventListener('keypress', handleKeyPress);
     }
@@ -50,6 +52,9 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       document.removeEventListener('keypress', handleKeyPress);
     }
   };
+
+
+  const audio = new Audio(`${baseUrl}/${words[0].audio}`);
 
   useEffect(() => {
     document.addEventListener('keypress', handleKeyPress);
@@ -63,13 +68,13 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       ...words[0],
     });
     words.shift();
-    setSelectedWord(null);
     if (words.length === 0) {
       onEnd(result);
+    } else {
+      setSelectedWord(null);
     }
   };
 
-  const audio = new Audio(`${baseUrl}/${words[0].audio}`);
   return (
     <Box
       height="70%"
@@ -82,7 +87,6 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
         {!selectedWord
           && (
           <div>
-            {/* {gameWords[0].word} */}
             <IconButton onClick={() => audio.play()} sx={{ width: 200, height: 200 }}>
               <Avatar src="./assets/images/icon-sound.png" sx={{ width: 100, height: 100 }} />
             </IconButton>

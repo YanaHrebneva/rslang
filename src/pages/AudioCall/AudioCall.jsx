@@ -6,6 +6,7 @@ import LevelPick from '../../components/LevelPick';
 import WordsService from '../../services/WordsService';
 import AudioCallGame from '../../components/AudioCallGame';
 import AudioScore from '../../components/AudioScore';
+import StatisticsService from '../../services/StatisticsService';
 
 import {
   generateRandomIndexes, getRandomIndexesExceptCurrent, mix, randomNumber,
@@ -115,6 +116,23 @@ export default function AudioCall() {
     iterateGameStep();
   };
 
+  const statistics = async (count) => {
+    if (user) {
+      let countLearnedWords;
+      let countAudioCall;
+
+      const res = await StatisticsService.getStatistics(user.id);
+
+      if (res.successful) {
+        countLearnedWords = res.data.learnedWords + count;
+        countAudioCall = res.data.optional.audioCall + count;
+        await StatisticsService.updateStatistics(user.id, countLearnedWords, countAudioCall);
+      } else {
+        await StatisticsService.updateStatistics(user.id, count, count);
+      }
+    }
+  };
+
   const handleGameEnd = (result) => {
     iterateGameStep();
     setGameScore(result);
@@ -122,6 +140,10 @@ export default function AudioCall() {
       result.filter((w) => w.right).forEach((w) => {
         if (w.userWord) {
           const repeatTimes = (w.userWord.optional?.repeat || 0);
+
+          const right = (w.userWord.optional?.right || 0);
+          const useWord = (w.userWord.optional?.useWord || 0);
+
           let difficulty = 'medium';
           if ((repeatTimes >= 2 && w.userWord.difficulty === 'medium')
           || (repeatTimes >= 4 && w.userWord.difficulty === 'hard')) {
@@ -130,25 +152,35 @@ export default function AudioCall() {
 
           UserApi.changeStateWordUser(user.id, w.id, difficulty, {
             repeat: repeatTimes + 1,
+            right: right + 1,
+            use: useWord + 1,
           });
         } else {
-          UserApi.createStateWordUser(user.id, w.id, 'medium', { repeat: 1 });
+          UserApi.createStateWordUser(user.id, w.id, 'medium', { repeat: 1, right: 1, useWord: 1 });
         }
       });
 
       result.filter((w) => !w.right).forEach((w) => {
         if (w.userWord) {
+
+          const useWord = (w.userWord.optional?.useWord || 0);
+
           UserApi.changeStateWordUser(
             user.id,
             w.id,
             w.userWord.difficulty === 'hard' ? 'hard' : 'medium',
             {
               repeat: 0,
+              useWord: useWord + 1,
             },
           );
+        } else {
+          UserApi.createStateWordUser(user.id, w.id, 'medium', { useWord: 1 });
         }
       });
     }
+    statistics(result.filter((el) => el.right).length);
+
   };
 
   const handlePlayAgain = () => {
