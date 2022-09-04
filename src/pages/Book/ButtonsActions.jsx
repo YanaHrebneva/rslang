@@ -59,7 +59,7 @@ function ButtonsActions({
             onClick={() => (changeStateWord('easy'))}
             style={{ border: '1px solid red', color: 'red' }}
           >
-            удалить из раздела
+            удалить
           </Button>
           <Button
             disabled
