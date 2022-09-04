@@ -18,6 +18,7 @@ export default function CardBook(props) {
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, userId,
   } = props;
+  const numberRepeatedWord = userWord?.optional?.repeat;
 
   const toggleStyle = () => {
     const difficulty = userWord?.difficulty;
@@ -25,9 +26,9 @@ export default function CardBook(props) {
       case !difficulty:
         break;
       case 'hard':
-        return ({ boxShadow: '-1px 5px 20px 2px rgba(255, 0, 0, 0.2)' });
+        return ({ boxShadow: '-1px 5px 20px 2px rgba(255, 0, 0, 0.2)', color: 'red' });
       case 'easy':
-        return ({ boxShadow: '-1px 5px 20px 2px rgba(0, 255, 41, 0.2)' });
+        return ({ boxShadow: '-1px 5px 20px 2px rgba(0, 255, 41, 0.2)', color: 'green' });
       default:
         break;
     }
@@ -42,7 +43,6 @@ export default function CardBook(props) {
         },
         // console.log(toggleStyle()),
         toggleStyle(),
-
       ]}
     >
       <CardMedia
@@ -70,7 +70,8 @@ export default function CardBook(props) {
       </CardActionArea>
       <Box style={userId ? { visibility: 'visible' } : { visibility: 'hidden' }}>
         <Typography gutterBottom variant="subtitle2" component="div">
-          использовано:0
+          использовано:
+          {numberRepeatedWord || 0 }
         </Typography>
         <Typography gutterBottom variant="subtitle2" component="div">
           угадано:0

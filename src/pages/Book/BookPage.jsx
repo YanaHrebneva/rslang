@@ -14,9 +14,9 @@ import GameMenu from './GameMenu';
 
 export default function BookPage() {
   const [words, setWords] = useState([]);
-  const [page, setPage] = useState((() => (JSON.parse(localStorage.getItem('userSessionPageGroup')) ? JSON.parse(localStorage.getItem('userSessionPageGroup'))[1] : 1)));
+  const [page, setPage] = useState((() => (JSON.parse(localStorage.getItem('userSessionPageGroup'))?.page || 1)));
   const [state, setToggleState] = useState(false);
-  const [groups, setGroups] = useState(() => (JSON.parse(localStorage.getItem('userSessionPageGroup')) ? JSON.parse(localStorage.getItem('userSessionPageGroup'))[0] : 1));
+  const [groups, setGroups] = useState(() => (JSON.parse(localStorage.getItem('userSessionPageGroup'))?.groups || 1));
   const { user } = useAuth();
 
   const userId = user?.userId || user?.id;
@@ -25,13 +25,18 @@ export default function BookPage() {
     filtersPageGroup: { $and: [{ page: page - 1, group: groups - 1 }] },
   };
 
+  const localStoragePageGroup = {
+    page,
+    groups,
+  };
+
   const toggleState = () => setToggleState(!state);
   const stateDifficultyWords = () => words.every((word) => word?.userWord?.difficulty);
   const stateDifficultyWordsEasy = () => words.every((word) => word?.userWord?.difficulty === 'easy');
   const allWordsSelected = stateDifficultyWords();
   const allWordsSelectedEasy = stateDifficultyWordsEasy();
 
-  useEffect(() => localStorage.setItem('userSessionPageGroup', JSON.stringify([groups, page])), [page, groups]);
+  useEffect(() => localStorage.setItem('userSessionPageGroup', JSON.stringify(localStoragePageGroup)), [page, groups]);
 
   useEffect(() => {
     if (user) {
