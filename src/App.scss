@@ -4,7 +4,31 @@
 	flex-direction: column;
 	height: 100%;
 }
+
+html[data-theme ='dark']{
+		--color-bg: rgb(62, 11, 11);
+		--color-bg-options-block: rgb(104, 18, 18);
+main{
+	background-color: rgb(62, 11, 11) !important;
+	color: #f8f1ee !important;
+}
+header{
+	background-color: rgb(62, 11, 11);
+	color: #f8f1ee !important;
+}
+footer{
+	background-color: rgb(46, 9, 9);
+	color: #f8f1ee !important;
+}
+}
+
+html[data-theme ='dark']{
+
+}
+
+
 :root {
+	--color-bg-options-block:#fffdfc;
 	--color-bg: #f8f1ee;
 	--color-menu-font: #ac3b61;
 	--color-title-font: #123C69;
