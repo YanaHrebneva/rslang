@@ -51,6 +51,8 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
     }
   };
 
+  const audio = new Audio(`${baseUrl}/${words[0].audio}`);
+
   useEffect(() => {
     document.addEventListener('keypress', handleKeyPress);
     audio.play();
@@ -69,14 +71,12 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
     }
   };
 
-  const audio = new Audio(`${baseUrl}/${words[0].audio}`);
   return (
     <Box
       height="70%"
       display="flex"
       alignItems="center"
       justifyContent="center"
-      onKeyPress={() => console.log('aaaaa')}
     >
       <Grid>
         {!selectedWord
