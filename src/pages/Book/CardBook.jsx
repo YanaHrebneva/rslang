@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions } from '@mui/material';
+import { Box, CardActionArea, CardActions } from '@mui/material';
 import { BASE_URL } from '../../constants/url';
 import ButtonsActions from './ButtonsActions';
 
@@ -18,6 +18,7 @@ export default function CardBook(props) {
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, userId,
   } = props;
+  const numberRepeatedWord = userWord?.optional?.repeat;
 
   const toggleStyle = () => {
     const difficulty = userWord?.difficulty;
@@ -25,9 +26,9 @@ export default function CardBook(props) {
       case !difficulty:
         break;
       case 'hard':
-        return ({ boxShadow: '-1px 5px 20px 2px rgba(255, 0, 0, 0.2)' });
+        return ({ boxShadow: '-1px 5px 20px 2px rgba(255, 0, 0, 0.2)', color: 'red' });
       case 'easy':
-        return ({ boxShadow: '-1px 5px 20px 2px rgba(0, 255, 41, 0.2)' });
+        return ({ boxShadow: '-1px 5px 20px 2px rgba(0, 255, 41, 0.2)', color: 'green' });
       default:
         break;
     }
@@ -42,7 +43,6 @@ export default function CardBook(props) {
         },
         // console.log(toggleStyle()),
         toggleStyle(),
-
       ]}
     >
       <CardMedia
@@ -58,17 +58,27 @@ export default function CardBook(props) {
           <Typography gutterBottom variant="h5" component="div">
             {`${wordTranslate}`}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle1" component="div" />
-          <Typography gutterBottom variant="subtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textMeaning }} gutterBottom variant="subtitle2" component="div" />
+          <Typography gutterBottom variant="subtitle4" component="div">
             {textMeaningTranslate}
           </Typography>
-          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="subtitle1" component="div" />
-          <Typography gutterBottom variant="subtitle2" component="div">
+          <Typography dangerouslySetInnerHTML={{ __html: textExample }} gutterBottom variant="subtitle2" component="div" />
+          <Typography gutterBottom variant="subtitle4" component="div">
             {textExampleTranslate}
           </Typography>
-          <Typography variant="subtitle2" color="text.secondary" />
         </CardContent>
       </CardActionArea>
+      <Box style={userId ? { visibility: 'visible' } : { visibility: 'hidden' }}>
+        <Typography gutterBottom variant="subtitle2" component="div">
+          использовано:
+          {numberRepeatedWord || 0 }
+        </Typography>
+        <Typography gutterBottom variant="subtitle2" component="div">
+          угадано:0
+        </Typography>
+
+      </Box>
+
       <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
         <ButtonsActions
           toggleState={toggleState}

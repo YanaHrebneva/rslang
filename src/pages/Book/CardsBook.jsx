@@ -11,7 +11,7 @@ export default function CardsBook({
       const wordWithId = { ...word, id: (word.id || word._id) };
 
       return (
-        <Grid item xs={12} sm={6} md={4} key={wordWithId.id}>
+        <Grid item xs={12} sm={6} md={3} key={wordWithId.id}>
           <CardBook
             groups={groups}
             userId={userId}

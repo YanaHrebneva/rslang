@@ -3,13 +3,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import './header.scss';
+import SwitchTheme from './SwitchTheme';
 
 export default function Header() {
   const { user, logout } = useAuth();
-
-  // const { user } = useAuth();
-  // console.log(user?.userId);
-  // WordService.addWordToUser(wordId, user.userId)
   return (
     <header className="header">
       <Link to="/home">
@@ -28,6 +25,7 @@ export default function Header() {
         {user && <Link to="/statistic">Статистика</Link>}
 
       </nav>
+      <SwitchTheme />
       {user
         ? (
           <Button

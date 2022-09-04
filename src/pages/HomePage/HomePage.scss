@@ -50,7 +50,7 @@
 }
 
 .options-block {
-    background-color: #fffdfc;
+    background-color: var(--color-bg-options-block);
 }
 
 .block-title {
@@ -117,7 +117,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    background-color: #fffdfc;
+    background-color: var(--color-bg-options-block);
     width: 568px;
     height: 150px;
     text-align: left;

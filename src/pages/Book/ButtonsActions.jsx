@@ -20,39 +20,6 @@ function ButtonsActions({
       await Play(allAudio[i]);
     }
   };
-  // const toggleHardEasyWord = async (params = difficulty) => {
-  //   const complexity = params;
-  //   switch (complexity) {
-  //     case 'hard':
-  //       await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
-  //       toggleState();
-  //       break;
-  //     case 'easy':
-  //       await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
-  //       toggleState();
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-
-  // if (!difficulty) {
-  //   await UserApi.addedUserHardWord(user.id, id);
-  //   toggleState();
-  //   return;
-  // }
-  // if (difficulty === 'hard') {
-  //   console.log('easy');
-  //   await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
-  //   toggleState();
-  //   return;
-  // }
-  // if (difficulty === 'easy') {
-  //   console.log('hard');
-  //   await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
-  //   toggleState();
-  // }
-  // };
   const createStateWord = async (stateWord) => {
     await UserApi.createStateWordUser(userId, id, stateWord);
     toggleState();
@@ -92,14 +59,14 @@ function ButtonsActions({
             onClick={() => (changeStateWord('easy'))}
             style={{ border: '1px solid red', color: 'red' }}
           >
-            del hard
+            удалить
           </Button>
           <Button
             disabled
             onClick={() => (changeStateWord('easy'))}
             style={{ color: 'grey', border: '1px solid green' }}
           >
-            learned
+            изучено
           </Button>
         </>
       );
@@ -107,29 +74,29 @@ function ButtonsActions({
 
     return (
       <>
-        <Button onClick={autoPlay}>Play</Button>
+        <Button onClick={autoPlay}>слушать</Button>
         <Button
           onClick={() => (createStateWord('hard'))}
           disabled={difficulty === 'easy'}
           style={styleHardBtn()}
         >
-          {(difficulty !== 'easy' && difficulty !== 'hard' ? 'add hard' : 'hard')}
+          {(difficulty !== 'easy' && difficulty !== 'hard' ? 'сложное' : 'добавлено')}
         </Button>
         <Button
           disabled={difficulty === 'hard' || difficulty === 'easy'}
           onClick={() => (createStateWord('easy'))}
           style={styleEasyBtn()}
         >
-          learned
+          изучено
         </Button>
       </>
     );
   }
   return (
     <>
-      <Button onClick={autoPlay}>Play</Button>
-      <Button disabled={!userId}>add hard</Button>
-      <Button disabled={!userId}>easy word</Button>
+      <Button onClick={autoPlay}>слушать</Button>
+      <Button disabled={!userId}>сложное</Button>
+      <Button disabled={!userId}>изучено</Button>
     </>
   );
 }
