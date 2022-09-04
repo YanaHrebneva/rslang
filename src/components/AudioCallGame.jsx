@@ -41,7 +41,9 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       handleChoose({ target: { value: variant.id } });
       document.removeEventListener('keypress', handleKeyPress);
     }
+
     if (!selectedWord && (e.key === 'Enter' || e.key === 'NumpadEnter')) {
+
       showAnswers();
       document.removeEventListener('keypress', handleKeyPress);
     }
@@ -50,6 +52,7 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       document.removeEventListener('keypress', handleKeyPress);
     }
   };
+
 
   const audio = new Audio(`${baseUrl}/${words[0].audio}`);
 
@@ -78,6 +81,7 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       display="flex"
       alignItems="center"
       justifyContent="center"
+      onKeyPress={() => console.log('aaaaa')}
     >
       <Grid>
         {!selectedWord

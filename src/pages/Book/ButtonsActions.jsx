@@ -20,39 +20,6 @@ function ButtonsActions({
       await Play(allAudio[i]);
     }
   };
-  // const toggleHardEasyWord = async (params = difficulty) => {
-  //   const complexity = params;
-  //   switch (complexity) {
-  //     case 'hard':
-  //       await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
-  //       toggleState();
-  //       break;
-  //     case 'easy':
-  //       await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
-  //       toggleState();
-  //       break;
-
-  //     default:
-  //       break;
-  //   }
-
-  // if (!difficulty) {
-  //   await UserApi.addedUserHardWord(user.id, id);
-  //   toggleState();
-  //   return;
-  // }
-  // if (difficulty === 'hard') {
-  //   console.log('easy');
-  //   await UserApi.toggleDifficultyUserWord(user.id, id, 'easy');
-  //   toggleState();
-  //   return;
-  // }
-  // if (difficulty === 'easy') {
-  //   console.log('hard');
-  //   await UserApi.toggleDifficultyUserWord(user.id, id, 'hard');
-  //   toggleState();
-  // }
-  // };
   const createStateWord = async (stateWord) => {
     await UserApi.createStateWordUser(userId, id, stateWord);
     toggleState();
@@ -92,7 +59,7 @@ function ButtonsActions({
             onClick={() => (changeStateWord('easy'))}
             style={{ border: '1px solid red', color: 'red' }}
           >
-            удалить из раздела
+            удалить
           </Button>
           <Button
             disabled
