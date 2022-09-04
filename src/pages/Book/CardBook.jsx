@@ -18,7 +18,8 @@ export default function CardBook(props) {
     textMeaningTranslate, textExampleTranslate,
     textExample, audio, audioExample, audioMeaning, userId,
   } = props;
-  const numberRepeatedWord = userWord?.optional?.repeat;
+  const numberGuessWord = userWord?.optional?.right;
+  const numberUseWord = userWord?.optional?.useWord;
 
   const toggleStyle = () => {
     const difficulty = userWord?.difficulty;
@@ -71,10 +72,11 @@ export default function CardBook(props) {
       <Box style={userId ? { visibility: 'visible' } : { visibility: 'hidden' }}>
         <Typography gutterBottom variant="subtitle2" component="div">
           использовано:
-          {numberRepeatedWord || 0 }
+          {numberUseWord || 0 }
         </Typography>
         <Typography gutterBottom variant="subtitle2" component="div">
-          угадано:0
+          угадано:
+          {numberGuessWord || 0}
         </Typography>
 
       </Box>
