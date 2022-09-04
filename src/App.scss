@@ -6,18 +6,18 @@
 }
 
 html[data-theme ='dark']{
-		--color-bg: rgb(62, 11, 11);
-		--color-bg-options-block: rgb(104, 18, 18);
+		--color-bg: #121830;
+		--color-bg-options-block: #121830;
 main{
-	background-color: rgb(62, 11, 11) !important;
+	background-color: #121830 !important;
 	color: #f8f1ee !important;
 }
 header{
-	background-color: rgb(62, 11, 11);
+	background-color: #121830;
 	color: #f8f1ee !important;
 }
 footer{
-	background-color: rgb(46, 9, 9);
+	background-color: #121830;
 	color: #f8f1ee !important;
 }
 }
