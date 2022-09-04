@@ -16,11 +16,11 @@ export default class UserApi {
     return 'please signing';
   }
 
-  static async createStateWordUser(userId, wordId, stateWord) {
+  static async createStateWordUser(userId, wordId, stateWord, optional = {}) {
     if (userId) {
       return axios.post(`${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`, {
         difficulty: `${stateWord}`,
-        optional: {},
+        optional: { ...optional },
       })
         .then(() => console.log('added hard word'))
         .catch((error) => console.error(error));
@@ -28,11 +28,11 @@ export default class UserApi {
     return 'please signing';
   }
 
-  static async changeStateWordUser(userId, wordId, difficulty) {
+  static async changeStateWordUser(userId, wordId, difficulty, optional = {}) {
     if (userId) {
       return axios.put(`${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`, {
         difficulty: `${difficulty}`,
-        optional: {},
+        optional: { ...optional },
       })
         .then(() => console.log(`added ${difficulty} word`))
         .catch((error) => console.error(error));

@@ -25,7 +25,10 @@
         "react/jsx-props-no-spreading": "off",
         "react/prop-types": "off",
         "no-param-reassign": "off",
-        "prefer-destructuring": "off"
+        "prefer-destructuring": "off",
+        "no-underscore-dangle": "off",
+        "no-use-before-define": "off",
+        "no-restricted-globals": "off"
     },
     "ignorePatterns": ["*test*.js"]
 }

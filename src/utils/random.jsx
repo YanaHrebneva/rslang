@@ -19,10 +19,10 @@ export function mix(array) {
   return array;
 }
 
-export function generateRandomIndexes(n) {
-  const array = Array.from(Array(n).keys());
+export function generateRandomIndexes(amount, max) {
+  const array = Array.from(Array(max).keys());
 
-  return mix(array).slice(0, n);
+  return mix(array).slice(0, amount);
 }
 
 export function getRandomIndexesExceptCurrent(n, amount, current) {
