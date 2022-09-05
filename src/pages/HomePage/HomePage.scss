@@ -159,3 +159,32 @@
 .team-member-text {
     font-family: Gilroy Regular;
 }
+
+@media (max-width: 1700px) {
+    .main-block {
+        padding: 4rem 10rem;
+    }
+
+    .options-wrapper {
+        padding: 4rem 10rem;
+    }
+
+    .team-wrapper {
+        padding: 4rem 10rem;
+    }
+}
+
+@media (max-width: 1350px) {
+    .main-block {
+        padding: 4rem 5rem;
+    }
+
+    .options-wrapper {
+        padding: 4rem 5rem;
+    }
+
+    .team-wrapper {
+        padding: 4rem 5rem;
+        flex-direction: column-reverse;
+    }
+}

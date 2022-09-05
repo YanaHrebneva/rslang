@@ -47,7 +47,7 @@ export default function HomePage() {
               <div className="team-member-img team-member-andy"> </div>
               <div className="team-member-text-wrap">
                 <span className="team-member-name">AndrewMatsiash</span>
-                <p className="team-member-text">Реализация всего учебника и его составляющих, работа со сбором статистики и отображением ее на соответсвующей странице, настройка роутинга</p>
+                <p className="team-member-text">Реализация всего учебника и его составляющих, работа с отображением статистики на соответсвующей странице, настройка роутинга</p>
               </div>
             </div>
 
