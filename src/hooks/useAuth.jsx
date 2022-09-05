@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem('user-data'));
     if (userData && !user) {
-      UserService.getUser(userData.userId)
+      UserService.getUser(userData.id)
         .then((result) => {
           if (result.successful) {
             setUser(result.data);
