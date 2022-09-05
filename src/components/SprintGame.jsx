@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Grid, Button, Box } from '@mui/material';
 // import { baseUrl } from '../utils/axios';
 
@@ -9,7 +9,6 @@ export default function SprintGame({ wordsPool, onEnd }) {
   const [result] = useState([]);
   let [myVariant] = useState();
   let [myWord]= useState();
-  console.log(words);
 
   const showNextWord = (answer) => {
     result.push({
@@ -36,15 +35,6 @@ export default function SprintGame({ wordsPool, onEnd }) {
         answer = true;
       }
     }
-
-      // if (e.target.value === true && words[0].wordTranslate === word.variants[1].word) {
-      //   setSelectedWord({ ...words[0], right: true });
-      // } else {
-      //   setSelectedWord({ id: e.target.value, right: false });
-      // }
-    console.log(myWord);
-    console.log(myVariant);
-    console.log(answer);
     showNextWord(answer);
   };
 
@@ -66,8 +56,7 @@ export default function SprintGame({ wordsPool, onEnd }) {
       alignItems="center"
       justifyContent="center"
     >
-      <Grid border="1px solid var(--color-menu-font)" padding="5rem">
-        {/* {!selectedWord && */}
+      <Grid border="1px solid var(--color-menu-font)" padding="5rem" className="box">
           <div>
             {chooseWord(words[0])}
             <br />
