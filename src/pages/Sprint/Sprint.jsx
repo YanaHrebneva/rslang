@@ -44,6 +44,7 @@ export default function Sprint() {
   const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
+    console.log('bbbbbb');
     if (state?.page && state?.groups) {
       WordsService.getWords(state.groups - 1, state.page - 1)
         .then((result) => {
