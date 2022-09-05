@@ -6,10 +6,13 @@ import LevelPick from '../../components/LevelPick';
 import WordsService from '../../services/WordsService';
 import SprintGame from '../../components/SprintGame';
 import SprintScore from '../../components/SprintScore';
+import StatisticsService from '../../services/StatisticsService';
 
 import {
   generateRandomIndexes, getRandomIndexesExceptCurrent, mix, randomNumber,
 } from '../../utils/random';
+import useAuth from '../../hooks/useAuth';
+import UserApi from '../../services/UserApi';
 
 const generateGameSetup = (wordsArray) => {
   const gameWordsIndexes = generateRandomIndexes(
@@ -42,16 +45,54 @@ export default function Sprint() {
   const [gameScore, setGameScore] = useState();
   const { state } = useLocation();
   const [initialLoad, setInitialLoad] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     console.log('bbbbbb');
     if (state?.page && state?.groups) {
-      WordsService.getWords(state.groups - 1, state.page - 1)
-        .then((result) => {
-          setWords(result.data);
-          setCurrentStep(2);
-          setInitialLoad(false);
+      if (user) {
+        UserApi.getUserAggregatedWords(
+          user.id,
+          20,
+          {
+            $and: [{ page: state.page - 1, group: state.groups - 1 },
+              { $or: [{ userWord: null }, { 'userWord.difficulty': { $ne: 'easy' } }] }],
+          },
+        ).then((result) => {
+          if (result.data[0].paginatedResults.length < 20) {
+            UserApi.getUserAggregatedWords(
+              user.id,
+              20 - result.data[0].paginatedResults.length,
+              {
+                $and: [{ page: { $lte: state.page - 2 }, group: state.groups - 1 },
+                  { $or: [{ userWord: null }, { 'userWord.difficulty': { $ne: 'easy' } }] }],
+              },
+            ).then((additional) => {
+              const allWords = [
+                ...result.data[0].paginatedResults,
+                ...additional.data[0].paginatedResults,
+              ].map((w) => ({ ...w, id: w._id }));
+              setInitialLoad(false);
+              if (!allWords.length) {
+                return setCurrentStep(4);
+              }
+              setWords(allWords);
+              setCurrentStep(2);
+            });
+          } else {
+            setWords(result.data[0].paginatedResults.map((w) => ({ ...w, id: w._id })));
+            setCurrentStep(2);
+            setInitialLoad(false);
+          }
         });
+      } else {
+        WordsService.getWords(state.groups - 1, state.page - 1)
+          .then((result) => {
+            setWords(result.data);
+            setCurrentStep(2);
+            setInitialLoad(false);
+          });
+      }
     } else {
       setInitialLoad(false);
     }
@@ -62,14 +103,84 @@ export default function Sprint() {
   };
 
   const handleGroupSelect = async (groupId) => {
-    const result = await WordsService.getWords(groupId, randomNumber(0, 29));
-    setWords(result.data);
+    let result = [];
+
+    if (user) {
+      result = (await UserApi.getUserAggregatedWords(
+        user.id,
+        20,
+        { $and: [{ page: 1, group: groupId }] },
+      )).data[0].paginatedResults.map((w) => ({ ...w, id: w._id }));
+    } else {
+      result = (await WordsService.getWords(groupId, randomNumber(0, 29))).data;
+    }
+    setWords(result);
     iterateGameStep();
   };
 
+  const updateStatistics = async (count) => {
+    if (user) {
+      let countLearnedWords;
+      let countSprint;
+
+      const res = await StatisticsService.getStatistics(user.id);
+
+      if (res.successful) {
+        countLearnedWords = res.data.learnedWords + count;
+        countSprint = res.data.optional.sprint + count;
+        await StatisticsService.updateStatistics(user.id, countLearnedWords, countSprint);
+      } else {
+        await StatisticsService.updateStatistics(user.id, count, count);
+      }
+    }
+  };
+
   const handleGameEnd = (result) => {
-    setGameScore(result);
     iterateGameStep();
+    setGameScore(result);
+    if (user) {
+      result.filter((w) => w.isCorrect).forEach((w) => {
+        if (w.userWord) {
+          const repeatTimes = (w.userWord.optional?.repeat || 0);
+
+          const right = (w.userWord.optional?.isCorrect || 0);
+          const useWord = (w.userWord.optional?.useWord || 0);
+
+          let difficulty = 'medium';
+          if ((repeatTimes >= 2 && w.userWord.difficulty === 'medium')
+          || (repeatTimes >= 4 && w.userWord.difficulty === 'hard')) {
+            difficulty = 'easy';
+          }
+
+          UserApi.changeStateWordUser(user.id, w.id, difficulty, {
+            repeat: repeatTimes + 1,
+            right: right + 1,
+            use: useWord + 1,
+          });
+        } else {
+          UserApi.createStateWordUser(user.id, w.id, 'medium', { repeat: 1, right: 1, useWord: 1 });
+        }
+      });
+
+      result.filter((w) => !w.isCorrect).forEach((w) => {
+        if (w.userWord) {
+          const useWord = (w.userWord.optional?.useWord || 0);
+
+          UserApi.changeStateWordUser(
+            user.id,
+            w.id,
+            w.userWord.difficulty === 'hard' ? 'hard' : 'medium',
+            {
+              repeat: 0,
+              useWord: useWord + 1,
+            },
+          );
+        } else {
+          UserApi.createStateWordUser(user.id, w.id, 'medium', { useWord: 1 });
+        }
+      });
+    }
+    updateStatistics(result.filter((el) => el.right).length);
   };
 
   const handlePlayAgain = () => {
@@ -78,6 +189,11 @@ export default function Sprint() {
 
   let gameComponent = '';
   switch (currentStep) {
+    case 4:
+      gameComponent = (
+        <>Все слова изучены</>
+      );
+      break;
     case 3:
       gameComponent = (
         <SprintScore gameScore={gameScore} onPlayAgain={handlePlayAgain} />
