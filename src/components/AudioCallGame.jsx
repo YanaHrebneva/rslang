@@ -79,7 +79,6 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      onKeyPress={() => console.log('aaaaa')}
     >
       <Grid>
         {!selectedWord
