@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { mainTheme } from '../../utils/theme';
 import LevelPick from '../../components/LevelPick';
 import WordsService from '../../services/WordsService';
-import AudioCallGame from '../../components/AudioCallGame';
-import AudioScore from '../../components/AudioScore';
+import SprintGame from '../../components/SprintGame';
+import SprintScore from '../../components/SprintScore';
 import StatisticsService from '../../services/StatisticsService';
 
 import {
@@ -20,7 +20,7 @@ const generateGameSetup = (wordsArray) => {
     Math.min(wordsArray.length, 20),
   )
     .map((i) => ({
-      variants: getRandomIndexesExceptCurrent(Math.min(wordsArray.length, 20), 4, i),
+      variants: getRandomIndexesExceptCurrent(Math.min(wordsArray.length, 20), 1, i),
       index: i,
     }));
 
@@ -39,7 +39,7 @@ const generateGameSetup = (wordsArray) => {
   return gameWords;
 };
 
-export default function AudioCall() {
+export default function Sprint() {
   const [currentStep, setCurrentStep] = useState(1);
   const [words, setWords] = useState([]);
   const [gameScore, setGameScore] = useState();
@@ -120,23 +120,23 @@ export default function AudioCall() {
   const updateStatistics = async (countRight, countAll) => {
     if (user) {
       let countLearnedWords;
-      let countAudioCallRight;
-      let countAudioCallAll;
+      let countSprintRight;
+      let countSprintAll;
 
       const res = await StatisticsService.getStatistics(user.id);
 
       if (res.successful) {
         countLearnedWords = res.data.learnedWords + countRight;
-        countAudioCallRight = res.data.optional.audioCallRight + countRight;
-        countAudioCallAll = res.data.optional.audioCallAll + countAll;
+        countSprintRight = res.data.optional.sprintRight + countRight;
+        countSprintAll = res.data.optional.sprintAll + countAll;
         await StatisticsService.updateStatistics(user.id, countLearnedWords, {
-          audioCallRight: countAudioCallRight,
-          audioCallAll: countAudioCallAll,
+          sprintRight: countSprintRight,
+          sprintAll: countSprintAll,
         });
       } else {
         await StatisticsService.updateStatistics(user.id, countRight, {
-          audioCallRight: countRight,
-          audioCallAll: countAll,
+          sprintRight: countRight,
+          sprintAll: countAll,
         });
       }
     }
@@ -146,11 +146,11 @@ export default function AudioCall() {
     iterateGameStep();
     setGameScore(result);
     if (user) {
-      result.filter((w) => w.right).forEach((w) => {
+      result.filter((w) => w.isCorrect).forEach((w) => {
         if (w.userWord) {
           const repeatTimes = (w.userWord.optional?.repeat || 0);
 
-          const right = (w.userWord.optional?.right || 0);
+          const right = (w.userWord.optional?.isCorrect || 0);
           const useWord = (w.userWord.optional?.useWord || 0);
 
           let difficulty = 'medium';
@@ -169,7 +169,7 @@ export default function AudioCall() {
         }
       });
 
-      result.filter((w) => !w.right).forEach((w) => {
+      result.filter((w) => !w.isCorrect).forEach((w) => {
         if (w.userWord) {
           const useWord = (w.userWord.optional?.useWord || 0);
 
@@ -203,20 +203,20 @@ export default function AudioCall() {
       break;
     case 3:
       gameComponent = (
-        <AudioScore gameScore={gameScore} onPlayAgain={handlePlayAgain} />
+        <SprintScore gameScore={gameScore} onPlayAgain={handlePlayAgain} />
       );
       break;
     case 2:
       gameComponent = (
-        <AudioCallGame wordsPool={generateGameSetup(words)} onEnd={handleGameEnd} />
+        <SprintGame wordsPool={generateGameSetup(words)} onEnd={handleGameEnd} />
       );
       break;
     case 1:
     default:
       gameComponent = (
         <LevelPick
-          title="Аудиовызов"
-          description="Тренировка Аудиовызов улучшает твое восприятие речи на слух"
+          title="Спринт"
+          description="Тренировка для повторения значений слов"
           onSelect={handleGroupSelect}
         />
       );
