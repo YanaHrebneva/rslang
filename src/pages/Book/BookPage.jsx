@@ -51,7 +51,7 @@ export default function BookPage() {
     if (groups === 7) {
       UserApi.getUserAggregatedWords(userId, 40, filters.filtersHard)
         .then((resHardWords) => setWords(resHardWords.data[0].paginatedResults))
-        .catch((error) => console.error(error));
+        .catch((error) => console.error('error:', error));
     }
   }, [groups === 7, state]);
 

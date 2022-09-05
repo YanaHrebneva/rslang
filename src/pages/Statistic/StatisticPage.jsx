@@ -6,10 +6,11 @@ import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Stack } from '@mui/material';
+import { Stack, ThemeProvider } from '@mui/material';
 import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import StatisticsService from '../../services/StatisticsService';
+import { mainTheme } from '../../utils/theme';
 
 function StatisticPage() {
   const [statistics, setStatistics] = useState(0);
@@ -27,7 +28,7 @@ function StatisticPage() {
   }, []);
 
   return (
-    <>
+    <ThemeProvider theme={mainTheme}>
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography
           component="h2"
@@ -40,10 +41,10 @@ function StatisticPage() {
         </Typography>
         <Stack direction="row" justifyContent="space-around">
           <Box>
-            <Typography variant="h2" color="text.primary" component="p">
+            <Typography variant="h2" color="green" component="p">
               {statistics.learnedWords}
             </Typography>
-            <Typography variant="h5" color="text.secondary" component="p">
+            <Typography variant="h5" color="#ac3b61" component="p">
               слов изучено
             </Typography>
           </Box>
@@ -52,7 +53,7 @@ function StatisticPage() {
               {/* { (statistics.learnedWords
               / (statistics.audioCallAll + sprint))*100 }% */}
             </Typography>
-            <Typography variant="h5" color="text.secondary" component="p">
+            <Typography variant="h5" color=" #ac3b61" component="p">
               правильных ответов
             </Typography>
           </Box>
@@ -75,9 +76,7 @@ function StatisticPage() {
                   align: 'center',
                 }}
                 sx={{
-                  backgroundColor: (theme) => (theme.palette.mode === 'light'
-                    ? theme.palette.grey[200]
-                    : theme.palette.grey[700]),
+                  backgroundColor: '#f9d2df',
                 }}
               />
               <CardContent>
@@ -91,24 +90,22 @@ function StatisticPage() {
                 />
                 <ul>
                   <Typography
-                    component="li"
-                    variant="subtitle1"
+                    variant="subtitle2"
                     align="left"
                   >
-                    изучено слов :
+                    <span style={{ paddingRight: '5px' }}>изучено слов :</span>
                     {statistics.audioCallRight}
+
                   </Typography>
                   <Typography
-                    component="li"
-                    variant="subtitle1"
+                    variant="subtitle2"
                     align="left"
                   >
                     правильных ответов:
                     {statistics.audioCallRight}
                   </Typography>
                   <Typography
-                    component="li"
-                    variant="subtitle1"
+                    variant="subtitle2"
                     align="left"
                   >
                     длинная серия ответов : 0
@@ -131,9 +128,7 @@ function StatisticPage() {
                   align: 'center',
                 }}
                 sx={{
-                  backgroundColor: (theme) => (theme.palette.mode === 'light'
-                    ? theme.palette.grey[200]
-                    : theme.palette.grey[700]),
+                  backgroundColor: '#f9d2df',
                 }}
               />
               <CardContent>
@@ -147,22 +142,19 @@ function StatisticPage() {
                 />
                 <ul>
                   <Typography
-                    component="li"
-                    variant="subtitle1"
+                    variant="subtitle2"
                     align="left"
                   >
                     изучено слов :
                   </Typography>
                   <Typography
-                    component="li"
-                    variant="subtitle1"
+                    variant="subtitle2"
                     align="left"
                   >
                     правильных ответов:
                   </Typography>
                   <Typography
-                    component="li"
-                    variant="subtitle1"
+                    variant="subtitle2"
                     align="left"
                   >
                     длинная серия ответов : 0
@@ -173,7 +165,9 @@ function StatisticPage() {
           </Grid>
         </Grid>
       </Container>
-    </>
+
+    </ThemeProvider>
+
   );
 }
 
