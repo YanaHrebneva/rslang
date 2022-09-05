@@ -130,11 +130,13 @@ export default function AudioCall() {
         countAudioCallRight = res.data.optional.audioCallRight + countRight;
         countAudioCallAll = res.data.optional.audioCallAll + countAll;
         await StatisticsService.updateStatistics(user.id, countLearnedWords, {
+          ...res.data.optional,
           audioCallRight: countAudioCallRight,
           audioCallAll: countAudioCallAll,
         });
       } else {
         await StatisticsService.updateStatistics(user.id, countRight, {
+          ...res.data.optional,
           audioCallRight: countRight,
           audioCallAll: countAll,
         });
