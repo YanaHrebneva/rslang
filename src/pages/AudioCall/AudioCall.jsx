@@ -117,19 +117,30 @@ export default function AudioCall() {
     iterateGameStep();
   };
 
-  const updateStatistics = async (count) => {
+  const updateStatistics = async (countRight, countAll) => {
+    // console.log(typeof countRight, typeof countAll);
     if (user) {
       let countLearnedWords;
-      let countAudioCall;
+      let countAudioCallRight;
+      let countAudioCallAll;
 
       const res = await StatisticsService.getStatistics(user.id);
 
       if (res.successful) {
-        countLearnedWords = res.data.learnedWords + count;
-        countAudioCall = res.data.optional.audioCall + count;
-        await StatisticsService.updateStatistics(user.id, countLearnedWords, countAudioCall);
+        countLearnedWords = res.data.learnedWords + countRight;
+        countAudioCallRight = res.data.optional.audioCallRight + countRight;
+        countAudioCallAll = res.data.optional.audioCallAll + countAll;
+        await StatisticsService.updateStatistics(user.id, countLearnedWords, {
+          audioCallRight: countAudioCallRight,
+          audioCallAll: countAudioCallAll,
+        }).then((result) => console.log(result.data));
+        console.log(5);
       } else {
-        await StatisticsService.updateStatistics(user.id, count, count);
+        await StatisticsService.updateStatistics(user.id, countRight, {
+          audioCallRight: countRight,
+          audioCallAll: countAll,
+        });
+        console.log(6);
       }
     }
   };
@@ -179,7 +190,7 @@ export default function AudioCall() {
         }
       });
     }
-    updateStatistics(result.filter((el) => el.right).length);
+    updateStatistics(result.filter((el) => el.right).length, result.length);
   };
 
   const handlePlayAgain = () => {
