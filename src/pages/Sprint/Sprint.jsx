@@ -147,8 +147,6 @@ export default function Sprint() {
   const handleGameEnd = (result) => {
     iterateGameStep();
     setGameScore(result);
-    console.log(result);
-
     if (user) {
       result.filter((w) => w.isCorrect).forEach((w) => {
         if (w.userWord) {
