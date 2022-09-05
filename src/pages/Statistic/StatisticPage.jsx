@@ -15,7 +15,6 @@ import { mainTheme } from '../../utils/theme';
 function StatisticPage() {
   const [statistics, setStatistics] = useState(0);
   const { user } = useAuth();
-  console.log(statistics);
   useEffect(() => {
     if (user) {
       StatisticsService.getStatistics(user.id)
@@ -49,9 +48,10 @@ function StatisticPage() {
             </Typography>
           </Box>
           <Box>
-            <Typography variant="h2" color="text.primary" component="p">
-              {/* { (statistics.learnedWords
-              / (statistics.audioCallAll + sprint))*100 }% */}
+            <Typography variant="h2" color="green" component="p">
+              { (statistics.learnedWords
+              / (statistics.audioCallAll + statistics.sprintAll)) * 100 }
+              %
             </Typography>
             <Typography variant="h5" color=" #ac3b61" component="p">
               правильных ответов
@@ -101,14 +101,14 @@ function StatisticPage() {
                     variant="subtitle2"
                     align="left"
                   >
-                    правильных ответов:
+                    <span style={{ paddingRight: '5px' }}>  правильных ответов:</span>
                     {statistics.audioCallRight}
                   </Typography>
                   <Typography
                     variant="subtitle2"
                     align="left"
                   >
-                    длинная серия ответов : 0
+                    <span style={{ paddingRight: '5px' }}>длинная серия ответов : 0</span>
                   </Typography>
 
                 </ul>
@@ -145,19 +145,20 @@ function StatisticPage() {
                     variant="subtitle2"
                     align="left"
                   >
-                    изучено слов :
+                    <span style={{ paddingRight: '5px' }}> изучено слов :</span>
+                    {statistics.sprintRight}
                   </Typography>
                   <Typography
                     variant="subtitle2"
                     align="left"
                   >
-                    правильных ответов:
+                    <span style={{ paddingRight: '5px' }}> правильных ответов: : 0</span>
                   </Typography>
                   <Typography
                     variant="subtitle2"
                     align="left"
                   >
-                    длинная серия ответов : 0
+                    <span style={{ paddingRight: '5px' }}> длинная серия ответов : 0</span>
                   </Typography>
                 </ul>
               </CardContent>
