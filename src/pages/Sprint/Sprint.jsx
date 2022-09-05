@@ -48,7 +48,6 @@ export default function Sprint() {
   const { user } = useAuth();
 
   useEffect(() => {
-    console.log('bbbbbb');
     if (state?.page && state?.groups) {
       if (user) {
         UserApi.getUserAggregatedWords(
