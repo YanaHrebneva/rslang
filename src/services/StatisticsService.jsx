@@ -10,12 +10,10 @@ export default class StatisticsService {
     return axios.get(`${paths.users}/${userId}${paths.statistics}`);
   }
 
-  static updateStatistics(userId, countLearnedWords, countAudioCall) {
+  static updateStatistics(userId, countLearnedWords, optional = {}) {
     return axios.put(`${paths.users}/${userId}${paths.statistics}`, {
       learnedWords: countLearnedWords,
-      optional: {
-        audioCall: countAudioCall,
-      },
+      optional: { ...optional },
     });
   }
 }
