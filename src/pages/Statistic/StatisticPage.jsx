@@ -45,7 +45,7 @@ function StatisticPage() {
         <Stack direction="row" justifyContent="space-around">
           <Box>
             <Typography variant="h2" color="green" component="p">
-              {statistics.learnedWords}
+              {statistics.learnedWords || 0}
             </Typography>
             <Typography variant="h5" color="#ac3b61" component="p">
               слов изучено
@@ -53,7 +53,7 @@ function StatisticPage() {
           </Box>
           <Box>
             <Typography variant="h2" color="green" component="p">
-              {resultPercent()}
+              {resultPercent() || 0}
               %
             </Typography>
             <Typography variant="h5" color=" #ac3b61" component="p">
@@ -97,7 +97,7 @@ function StatisticPage() {
                     align="left"
                   >
                     <span style={{ paddingRight: '5px' }}>изучено слов :</span>
-                    {statistics.audioCallRight}
+                    {statistics.audioCallRight || 0}
 
                   </Typography>
                   <Typography
@@ -105,7 +105,7 @@ function StatisticPage() {
                     align="left"
                   >
                     <span style={{ paddingRight: '5px' }}>  правильных ответов:</span>
-                    {statistics.audioCallRight}
+                    {statistics.audioCallRight || 0}
                   </Typography>
                   <Typography
                     variant="subtitle2"
@@ -149,13 +149,18 @@ function StatisticPage() {
                     align="left"
                   >
                     <span style={{ paddingRight: '5px' }}> изучено слов :</span>
-                    {statistics.sprintRight}
+                    {statistics.sprintRight || 0}
                   </Typography>
                   <Typography
                     variant="subtitle2"
                     align="left"
                   >
-                    <span style={{ paddingRight: '5px' }}> правильных ответов: : 0</span>
+                    <span style={{ paddingRight: '5px' }}>
+                      {' '}
+                      правильных ответов: :
+                      {' '}
+                      {statistics.sprintRight || 0}
+                    </span>
                   </Typography>
                   <Typography
                     variant="subtitle2"
