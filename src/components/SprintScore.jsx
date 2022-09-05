@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
-import scoreResult from '../constants/scoreResult';
+import scoreResult from '../constants/ScoreResult';
 import { getCorrectWord } from '../utils/getCorrectWord';
 import { baseUrl } from '../utils/axios';
 

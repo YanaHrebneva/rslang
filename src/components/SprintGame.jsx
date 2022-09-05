@@ -12,6 +12,7 @@ export default function SprintGame({ wordsPool, onEnd }) {
 
   const showNextWord = (answer) => {
     result.push({
+      ...words[0],
       word: words[0].word,
       id: words[0].id,
       translate: words[0].wordTranslate,

@@ -126,15 +126,17 @@ export default function Sprint() {
       const res = await StatisticsService.getStatistics(user.id);
 
       if (res.successful) {
-        countLearnedWords = res.data.learnedWords + countRight;
-        countSprintRight = res.data.optional.sprintRight + countRight;
-        countSprintAll = res.data.optional.sprintAll + countAll;
+        countLearnedWords = (res.data.learnedWords || 0) + countRight;
+        countSprintRight = (res.data.optional.sprintRight || 0) + countRight;
+        countSprintAll = (res.data.optional.sprintAll || 0) + countAll;
         await StatisticsService.updateStatistics(user.id, countLearnedWords, {
+          ...res.data.optional,
           sprintRight: countSprintRight,
           sprintAll: countSprintAll,
         });
       } else {
         await StatisticsService.updateStatistics(user.id, countRight, {
+          ...res.data.optional,
           sprintRight: countRight,
           sprintAll: countAll,
         });
@@ -145,6 +147,8 @@ export default function Sprint() {
   const handleGameEnd = (result) => {
     iterateGameStep();
     setGameScore(result);
+    console.log(result);
+
     if (user) {
       result.filter((w) => w.isCorrect).forEach((w) => {
         if (w.userWord) {
