@@ -151,10 +151,8 @@ export default function Sprint() {
       result.filter((w) => w.isCorrect).forEach((w) => {
         if (w.userWord) {
           const repeatTimes = (w.userWord.optional?.repeat || 0);
-
-          const right = (w.userWord.optional?.isCorrect || 0);
+          const right = (w.userWord.optional?.right || 0);
           const useWord = (w.userWord.optional?.useWord || 0);
-
           let difficulty = 'medium';
           if ((repeatTimes >= 2 && w.userWord.difficulty === 'medium')
           || (repeatTimes >= 4 && w.userWord.difficulty === 'hard')) {
@@ -189,7 +187,7 @@ export default function Sprint() {
         }
       });
     }
-    updateStatistics(result.filter((el) => el.right).length, result.length);
+    updateStatistics(result.filter((el) => el.isCorrect).length, result.length);
   };
 
   const handlePlayAgain = () => {

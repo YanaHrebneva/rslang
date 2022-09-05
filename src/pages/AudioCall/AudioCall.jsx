@@ -189,6 +189,7 @@ export default function AudioCall() {
         }
       });
     }
+
     updateStatistics(result.filter((el) => el.right).length, result.length);
   };
 
