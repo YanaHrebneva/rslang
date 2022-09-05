@@ -126,6 +126,7 @@ function StatisticPage() {
                     align="left"
                   >
                     изучено слов :
+                    {learnedWordsAudioCall}
                   </Typography>
                   <Typography
                     component="li"
