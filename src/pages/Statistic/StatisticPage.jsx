@@ -10,23 +10,19 @@ import { Stack } from '@mui/material';
 import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import StatisticsService from '../../services/StatisticsService';
-import UserApi from '../../services/UserApi';
 
 function StatisticPage() {
-  const [learnedWords, setLearnedWords] = useState(0);
-  const [learnedWordsAudioCall, setLearnedWordsAudioCall] = useState(0);
+  const [statistics, setStatistics] = useState(0);
   const { user } = useAuth();
-
+  console.log(statistics);
   useEffect(() => {
     if (user) {
       StatisticsService.getStatistics(user.id)
         .then(({ data }) => {
-          console.log(data);
-          setLearnedWords(data.learnedWords);
-          setLearnedWordsAudioCall(data.optional.audioCall);
+          const { learnedWords, optional } = data;
+          const newStatistics = { learnedWords, ...optional };
+          setStatistics(newStatistics);
         });
-      UserApi.getUserAggregatedWords(user.id, 50, { 'userWord.optional.right': 1 })
-        .then((data) => console.log(data));
     }
   }, []);
 
@@ -45,7 +41,7 @@ function StatisticPage() {
         <Stack direction="row" justifyContent="space-around">
           <Box>
             <Typography variant="h2" color="text.primary" component="p">
-              {learnedWords}
+              {statistics.learnedWords}
             </Typography>
             <Typography variant="h5" color="text.secondary" component="p">
               слов изучено
@@ -53,7 +49,8 @@ function StatisticPage() {
           </Box>
           <Box>
             <Typography variant="h2" color="text.primary" component="p">
-              20%
+              {/* { (statistics.learnedWords
+              / (statistics.audioCallAll + sprint))*100 }% */}
             </Typography>
             <Typography variant="h5" color="text.secondary" component="p">
               правильных ответов
@@ -99,7 +96,7 @@ function StatisticPage() {
                     align="left"
                   >
                     изучено слов :
-                    {learnedWordsAudioCall}
+                    {statistics.audioCallRight}
                   </Typography>
                   <Typography
                     component="li"
@@ -107,13 +104,14 @@ function StatisticPage() {
                     align="left"
                   >
                     правильных ответов:
+                    {statistics.audioCallRight}
                   </Typography>
                   <Typography
                     component="li"
                     variant="subtitle1"
                     align="left"
                   >
-                    длинная серия ответов :
+                    длинная серия ответов : 0
                   </Typography>
 
                 </ul>
@@ -167,7 +165,7 @@ function StatisticPage() {
                     variant="subtitle1"
                     align="left"
                   >
-                    длинная серия ответов :
+                    длинная серия ответов : 0
                   </Typography>
                 </ul>
               </CardContent>
