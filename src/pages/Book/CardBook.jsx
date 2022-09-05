@@ -27,9 +27,9 @@ export default function CardBook(props) {
       case !difficulty:
         break;
       case 'hard':
-        return ({ boxShadow: '-1px 5px 20px 2px rgba(255, 0, 0, 0.2)', color: 'red' });
+        return ({ boxShadow: '-1px 5px 20px 10px rgba(255, 0, 0, 0.2)', color: 'red' });
       case 'easy':
-        return ({ boxShadow: '-1px 5px 20px 2px rgba(0, 255, 41, 0.2)', color: 'green' });
+        return ({ boxShadow: '-1px 5px 20px 10px rgba(0, 255, 41, 0.2)', color: 'green' });
       default:
         break;
     }

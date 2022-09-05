@@ -54,8 +54,8 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function SwitchTheme() {
-  const { setTheme } = useTheme();
-  const [checked, setChecked] = useState(true);
+  const { theme, setTheme } = useTheme();
+  const [checked, setChecked] = useState(theme === 'dark');
 
   const toggleTheme = (check) => {
     if (check) {
@@ -67,14 +67,14 @@ export default function SwitchTheme() {
 
   const handleChecked = () => {
     setChecked(!checked);
-    toggleTheme(checked);
+    toggleTheme(!checked);
   };
 
   return (
     <FormGroup>
       <FormControlLabel
         onChange={handleChecked}
-        control={<MaterialUISwitch sx={{ m: 1 }} />}
+        control={<MaterialUISwitch checked={checked} sx={{ m: 1 }} />}
       />
     </FormGroup>
   );

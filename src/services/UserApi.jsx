@@ -9,8 +9,7 @@ const paths = {
 export default class UserApi {
   static async getUserWords(userId) {
     if (userId) {
-      const response = await axios.get(`${baseUrl}/${paths.users}${userId}${paths.words}`)
-        .catch((error) => console.error(error));
+      const response = await axios.get(`${baseUrl}/${paths.users}${userId}${paths.words}`);
       return response;
     }
     return 'please signing';
@@ -21,9 +20,7 @@ export default class UserApi {
       return axios.post(`${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`, {
         difficulty: `${stateWord}`,
         optional: { ...optional },
-      })
-        .then(() => console.log('added hard word'))
-        .catch((error) => console.error(error));
+      });
     }
     return 'please signing';
   }
@@ -33,17 +30,14 @@ export default class UserApi {
       return axios.put(`${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`, {
         difficulty: `${difficulty}`,
         optional: { ...optional },
-      })
-        .then(() => console.log(`added ${difficulty} word`))
-        .catch((error) => console.error(error));
+      });
     }
     return 'please signing';
   }
 
   static async getUserAggregatedWord(userId, wordId) {
     if (userId) {
-      return axios.get(`${baseUrl}/${paths.users}${userId}${paths.aggregatedWords}${wordId}`)
-        .catch((error) => console.error(error));
+      return axios.get(`${baseUrl}/${paths.users}${userId}${paths.aggregatedWords}${wordId}`);
     }
     return 'please signing';
   }
@@ -53,7 +47,7 @@ export default class UserApi {
       return axios.get(
         `${baseUrl}/${paths.users}${userId}${paths.aggregatedWords}`,
         { params: { wordsPerPage, filter } },
-      ).catch((error) => console.error(error));
+      );
     }
   }
 
@@ -61,7 +55,7 @@ export default class UserApi {
     if (userId) {
       axios.delete(
         `${baseUrl}/${paths.users}${userId}${paths.words}/${wordId}`,
-      ).catch((error) => console.error(error));
+      );
     }
     return 'please signing';
   }
