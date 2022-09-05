@@ -27,7 +27,7 @@ function StatisticPage() {
   }, []);
 
   const resultPercent = () => (
-    parseFloat((statistics.learnedWords / (statistics.audioCallAll + statistics.sprintAll)) * 100)
+    Math.round((statistics.learnedWords / (statistics.audioCallAll + statistics.sprintAll)) * 100)
   );
 
   return (
