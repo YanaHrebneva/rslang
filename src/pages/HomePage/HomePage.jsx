@@ -45,25 +45,25 @@ export default function HomePage() {
           <div className="team">
             <div className="team-member">
               <div className="team-member-img team-member-andy"> </div>
-              <div>
+              <div className="team-member-text-wrap">
                 <span className="team-member-name">AndrewMatsiash</span>
-                <p className="team-member-text">Текст о том какие мы молодцы и как много сделали</p>
+                <p className="team-member-text">Реализация всего учебника и его составляющих, работа со сбором статистики и отображением ее на соответсвующей странице, настройка роутинга</p>
               </div>
             </div>
 
             <div className="team-member">
               <div className="team-member-img team-member-nastya"> </div>
-              <div>
+              <div className="team-member-text-wrap">
                 <span className="team-member-name">nastagh</span>
-                <p className="team-member-text">Текст о том какие мы молодцы и как много сделали</p>
+                <p className="team-member-text">Разработка общих компонентов игр, игра «Аудиовызов», реализация авторизации и регистрации пользователя, а также создание соответствующих страниц</p>
               </div>
             </div>
 
             <div className="team-member">
               <div className="team-member-img team-member-yana"> </div>
-              <div>
+              <div className="team-member-text-wrap">
                 <span className="team-member-name">YanaHrebneva</span>
-                <p className="team-member-text">Текст о том какие мы молодцы и как много сделали</p>
+                <p className="team-member-text">Тимлид, дизайн приложения, верстка главной страницы, игра «Спринт», настройка работы с сервером</p>
               </div>
             </div>
           </div>
