@@ -115,7 +115,7 @@
 
 .team-member {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     background-color: var(--color-bg-options-block);
     width: 568px;
@@ -143,6 +143,10 @@
     background-image: url('./../../../public/assets/images/yana.jpg');
 }
 
+.team-member-text-wrap {
+    width: 75%;
+}
+
 .team-member-name {
     color: var(--color-menu-font);
     font-size: 1.5rem;
@@ -154,4 +158,33 @@
 
 .team-member-text {
     font-family: Gilroy Regular;
+}
+
+@media (max-width: 1700px) {
+    .main-block {
+        padding: 4rem 10rem;
+    }
+
+    .options-wrapper {
+        padding: 4rem 10rem;
+    }
+
+    .team-wrapper {
+        padding: 4rem 10rem;
+    }
+}
+
+@media (max-width: 1350px) {
+    .main-block {
+        padding: 4rem 5rem;
+    }
+
+    .options-wrapper {
+        padding: 4rem 5rem;
+    }
+
+    .team-wrapper {
+        padding: 4rem 5rem;
+        flex-direction: column-reverse;
+    }
 }
