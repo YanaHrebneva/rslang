@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Button, Box } from '@mui/material';
 // import { baseUrl } from '../utils/axios';
 
@@ -7,19 +7,19 @@ export default function SprintGame({ wordsPool, onEnd }) {
   const [words] = useState(wordsPool);
   const [selectedWord, setSelectedWord] = useState();
   const [result] = useState([]);
-  const [myVariant, setMyVariant] = useState();
-  const [myWord, setMyWord] = useState();
-  console.log('aaaaa');
-  console.log(wordsPool);
+  let [myVariant] = useState();
+  let [myWord]= useState();
+  console.log(words);
 
-  const showNextWord = () => {
+  const showNextWord = (answer) => {
     result.push({
       word: words[0].word,
       id: words[0].id,
       translate: words[0].wordTranslate,
+      isCorrect: answer,
     });
+    setSelectedWord(words[0].word);
     words.shift();
-    setSelectedWord(null);
     if (words.length === 0) {
       onEnd(result);
     }
@@ -37,23 +37,26 @@ export default function SprintGame({ wordsPool, onEnd }) {
       }
     }
 
-    // if (!selectedWord) {
-    //   if (e.target.value === words[0].id) {
-    //     setSelectedWord({ ...words[0], right: true });
-    //   } else {
-    //     setSelectedWord({ id: e.target.value, right: false });
-    //   }
-    // }
+      // if (e.target.value === true && words[0].wordTranslate === word.variants[1].word) {
+      //   setSelectedWord({ ...words[0], right: true });
+      // } else {
+      //   setSelectedWord({ id: e.target.value, right: false });
+      // }
+    console.log(myWord);
+    console.log(myVariant);
+    console.log(answer);
+    showNextWord(answer);
+  };
 
-    alert(answer);
-    showNextWord();
+  const chooseWord = (word) => {
+    myWord = word;
+    return word.word;
   };
 
   const chooseVariant = (word) => {
-    const variant = word.variants[0 || 1].word;
-    setMyVariant(variant);
-    setMyWord(word);
-    return variant;
+    const variant = word;
+    myVariant = variant;
+    return variant.word;
   };
 
   return (
@@ -64,13 +67,12 @@ export default function SprintGame({ wordsPool, onEnd }) {
       justifyContent="center"
     >
       <Grid border="1px solid var(--color-menu-font)" padding="5rem">
-        {!selectedWord && (
+        {/* {!selectedWord && */}
           <div>
-            {words[0].word}
+            {chooseWord(words[0])}
             <br />
-            {chooseVariant(myWord)}
+            {chooseVariant(words[0].variants[0 || 1])}
           </div>
-        )}
         <Grid container justifyContent="center" mt={6} mb={6}>
           <Grid>
             <Button
@@ -80,14 +82,14 @@ export default function SprintGame({ wordsPool, onEnd }) {
               }}
               variant="outlined"
               value="true"
-              onClick={(e) => handleChoose(e, 'correct')}
+              onClick={e => handleChoose(e, "correct")}
             >
               ВЕРНО
             </Button>
             <Button
               variant="outlined"
               value="false"
-              onClick={(e) => handleChoose(e, 'incorrect')}
+              onClick={e => handleChoose(e, "incorrect")}
             >
               НЕВЕРНО
             </Button>

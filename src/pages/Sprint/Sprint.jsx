@@ -5,16 +5,19 @@ import { mainTheme } from '../../utils/theme';
 import LevelPick from '../../components/LevelPick';
 import WordsService from '../../services/WordsService';
 import SprintGame from '../../components/SprintGame';
-import AudioScore from '../../components/AudioScore';
+import SprintScore from '../../components/SprintScore';
 
 import {
   generateRandomIndexes, getRandomIndexesExceptCurrent, mix, randomNumber,
 } from '../../utils/random';
 
 const generateGameSetup = (wordsArray) => {
-  const gameWordsIndexes = generateRandomIndexes(10)
+  const gameWordsIndexes = generateRandomIndexes(
+    Math.min(wordsArray.length, 10),
+    Math.min(wordsArray.length, 20),
+  )
     .map((i) => ({
-      variants: getRandomIndexesExceptCurrent(20, 1, i),
+      variants: getRandomIndexesExceptCurrent(Math.min(wordsArray.length, 20), 1, i),
       index: i,
     }));
 
@@ -41,7 +44,6 @@ export default function Sprint() {
   const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
-    console.log('bbbbbb');
     if (state?.page && state?.groups) {
       WordsService.getWords(state.groups - 1, state.page - 1)
         .then((result) => {
@@ -77,7 +79,7 @@ export default function Sprint() {
   switch (currentStep) {
     case 3:
       gameComponent = (
-        <AudioScore gameScore={gameScore} onPlayAgain={handlePlayAgain} />
+        <SprintScore gameScore={gameScore} onPlayAgain={handlePlayAgain} />
       );
       break;
     case 2:

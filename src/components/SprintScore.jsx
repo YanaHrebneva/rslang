@@ -8,7 +8,7 @@ import scoreResult from '../constants/scoreResult';
 import { getCorrectWord } from '../utils/getCorrectWord';
 import { baseUrl } from '../utils/axios';
 
-export default function AudioScore({ gameScore, onPlayAgain }) {
+export default function SprintScore({ gameScore, onPlayAgain }) {
   const [showWords, setShowWords] = useState(false);
   const navigate = useNavigate();
   const style = {
@@ -22,7 +22,7 @@ export default function AudioScore({ gameScore, onPlayAgain }) {
     p: 2,
   };
 
-  const amountRightResult = gameScore.filter((el) => el.right).length;
+  const amountRightResult = gameScore.filter((el) => el.isCorrect).length;
   const progressPercent = (amountRightResult / gameScore.length) * 100;
   const amountIncorrectResult = gameScore.length - amountRightResult;
 
@@ -93,7 +93,7 @@ export default function AudioScore({ gameScore, onPlayAgain }) {
             {' '}
             {amountIncorrectResult}
           </Typography>
-          {gameScore.filter((el) => !el.right).map((el) => {
+          {gameScore.filter((el) => !el.isCorrect).map((el) => {
             const audio = new Audio(`${baseUrl}/${el.audio}`);
             return (
               <Grid container alignItems="center" justifyContent="flex-start" spacing={3} key={el.word}>
@@ -119,7 +119,7 @@ export default function AudioScore({ gameScore, onPlayAgain }) {
             {' '}
             {amountRightResult}
           </Typography>
-          {gameScore.filter((el) => el.right).map((el) => {
+          {gameScore.filter((el) => el.isCorrect).map((el) => {
             const audio = new Audio(`${baseUrl}/${el.audio}`);
             return (
               <Grid container alignItems="center" justifyContent="flex-start" spacing={3} key={el.word}>
