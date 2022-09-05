@@ -2,7 +2,6 @@ import {
   Container, Grid, Pagination, Stack, ThemeProvider,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-// import styles from './bookPage.module.css';
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
@@ -62,19 +61,19 @@ export default function BookPage() {
     }
     switch (groups) {
       case 1:
-        return ({ boxShadow: '-1px 5px 20px 40px #f9d2df' });
+        return ({ boxShadow: '-1px 5px 20px 30px #f9d2df' });
       case 2:
-        return ({ boxShadow: '-1px 5px 20px 40px #f7c2d4' });
+        return ({ boxShadow: '-1px 5px 20px 30px #f7c2d4' });
       case 3:
-        return ({ boxShadow: '-1px 5px 20px 40px #f3aec5' });
+        return ({ boxShadow: '-1px 5px 20px 30px #f3aec5' });
       case 4:
-        return ({ boxShadow: '-1px 5px 20px 40px #f19ab8 ' });
+        return ({ boxShadow: '-1px 5px 20px 30px #f19ab8 ' });
       case 5:
-        return ({ boxShadow: '-1px 5px 20px 40px #d77294' });
+        return ({ boxShadow: '-1px 5px 20px 30px #d77294' });
       case 6:
-        return ({ boxShadow: '-1px 5px 20px 40px #c9597f ' });
+        return ({ boxShadow: '-1px 5px 20px 30px #c9597f ' });
       case 7:
-        return ({ boxShadow: '-1px 5px 20px 40px #ac3b61' });
+        return ({ boxShadow: '-1px 5px 20px 30px #ac3b61' });
       default:
         break;
     }

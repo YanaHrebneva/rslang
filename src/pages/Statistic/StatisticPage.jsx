@@ -15,7 +15,6 @@ import UserApi from '../../services/UserApi';
 function StatisticPage() {
   const [learnedWords, setLearnedWords] = useState(0);
   const [learnedWordsAudioCall, setLearnedWordsAudioCall] = useState(0);
-  const [WordsRight, setWordsRight] = useState(0);
   const { user } = useAuth();
 
   useEffect(() => {
