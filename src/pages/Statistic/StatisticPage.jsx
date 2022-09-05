@@ -26,6 +26,10 @@ function StatisticPage() {
     }
   }, []);
 
+  const resultPercent = () => (
+    parseFloat((statistics.learnedWords / (statistics.audioCallAll + statistics.sprintAll)) * 100)
+  );
+
   return (
     <ThemeProvider theme={mainTheme}>
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
@@ -49,8 +53,7 @@ function StatisticPage() {
           </Box>
           <Box>
             <Typography variant="h2" color="green" component="p">
-              { (statistics.learnedWords
-              / (statistics.audioCallAll + statistics.sprintAll)) * 100 }
+              {resultPercent()}
               %
             </Typography>
             <Typography variant="h5" color=" #ac3b61" component="p">
