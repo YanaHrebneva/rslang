@@ -21,12 +21,14 @@ function ButtonsActions({
     }
   };
   const createStateWord = async (stateWord) => {
-    await UserApi.createStateWordUser(userId, id, stateWord);
+    await UserApi.createStateWordUser(userId, id, stateWord)
+      .catch((error) => console.error(error));
     toggleState();
   };
 
   const changeStateWord = async (stateWord) => {
-    await UserApi.changeStateWordUser(userId, id, stateWord);
+    await UserApi.changeStateWordUser(userId, id, stateWord)
+      .catch((error) => console.error(error));
     toggleState();
   };
 

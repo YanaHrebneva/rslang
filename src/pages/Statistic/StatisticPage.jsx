@@ -3,19 +3,19 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import { Stack } from '@mui/material';
 import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import StatisticsService from '../../services/StatisticsService';
+import UserApi from '../../services/UserApi';
 
 function StatisticPage() {
   const [learnedWords, setLearnedWords] = useState(0);
   const [learnedWordsAudioCall, setLearnedWordsAudioCall] = useState(0);
+  const [WordsRight, setWordsRight] = useState(0);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -26,13 +26,13 @@ function StatisticPage() {
           setLearnedWords(data.learnedWords);
           setLearnedWordsAudioCall(data.optional.audioCall);
         });
+      UserApi.getUserAggregatedWords(user.id, 50, { 'userWord.optional.right': 1 })
+        .then((data) => console.log(data));
     }
   }, []);
 
   return (
     <>
-      <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
-      <CssBaseline />
       <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
         <Typography
           component="h2"

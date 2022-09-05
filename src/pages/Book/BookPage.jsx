@@ -3,7 +3,6 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 // import styles from './bookPage.module.css';
-
 import CardsBook from './CardsBook';
 import useAuth from '../../hooks/useAuth';
 import UserApi from '../../services/UserApi';
@@ -43,7 +42,7 @@ export default function BookPage() {
         .then(({ data }) => {
           const { paginatedResults } = data[0];
           setWords(paginatedResults);
-        });
+        }).catch((error) => console.error(error));
       return;
     }
     noUserApi.getWords(groups, page).then(({ data }) => setWords(data));
@@ -52,13 +51,38 @@ export default function BookPage() {
   useEffect(() => {
     if (groups === 7) {
       UserApi.getUserAggregatedWords(userId, 40, filters.filtersHard)
-        .then((resHardWords) => setWords(resHardWords.data[0].paginatedResults));
+        .then((resHardWords) => setWords(resHardWords.data[0].paginatedResults))
+        .catch((error) => console.error(error));
     }
   }, [groups === 7, state]);
 
+  const toggleStyle = () => {
+    if (stateDifficultyWords() && groups !== 7) {
+      return ({ backgroundColor: '#f9d2df' });
+    }
+    switch (groups) {
+      case 1:
+        return ({ boxShadow: '-1px 5px 20px 40px #f9d2df' });
+      case 2:
+        return ({ boxShadow: '-1px 5px 20px 40px #f7c2d4' });
+      case 3:
+        return ({ boxShadow: '-1px 5px 20px 40px #f3aec5' });
+      case 4:
+        return ({ boxShadow: '-1px 5px 20px 40px #f19ab8 ' });
+      case 5:
+        return ({ boxShadow: '-1px 5px 20px 40px #d77294' });
+      case 6:
+        return ({ boxShadow: '-1px 5px 20px 40px #c9597f ' });
+      case 7:
+        return ({ boxShadow: '-1px 5px 20px 40px #ac3b61' });
+      default:
+        break;
+    }
+  };
+
   return (
     <ThemeProvider theme={mainTheme}>
-      <Container sx={{ padding: '50px' }} style={allWordsSelectedEasy ? { boxShadow: '-2px -7px 88px 2px rgba(219, 7, 244, 0.2)' } : { backgroundColor: 'transparent' }}>
+      <Container sx={{ padding: '50px' }} style={toggleStyle()}>
         <ButtonsNavGroups user={userId} groups={groups} setGroups={setGroups} setPage={setPage} />
         <GameMenu disabled={allWordsSelectedEasy} page={page} groups={groups} />
         <Stack spacing={2}>
