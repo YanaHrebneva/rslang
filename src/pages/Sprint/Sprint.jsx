@@ -117,19 +117,27 @@ export default function Sprint() {
     iterateGameStep();
   };
 
-  const updateStatistics = async (count) => {
+  const updateStatistics = async (countRight, countAll) => {
     if (user) {
       let countLearnedWords;
-      let countSprint;
+      let countSprintRight;
+      let countSprintAll;
 
       const res = await StatisticsService.getStatistics(user.id);
 
       if (res.successful) {
-        countLearnedWords = res.data.learnedWords + count;
-        countSprint = res.data.optional.sprint + count;
-        await StatisticsService.updateStatistics(user.id, countLearnedWords, countSprint);
+        countLearnedWords = res.data.learnedWords + countRight;
+        countSprintRight = res.data.optional.sprintRight + countRight;
+        countSprintAll = res.data.optional.sprintAll + countAll;
+        await StatisticsService.updateStatistics(user.id, countLearnedWords, {
+          sprintRight: countSprintRight,
+          sprintAll: countSprintAll,
+        });
       } else {
-        await StatisticsService.updateStatistics(user.id, count, count);
+        await StatisticsService.updateStatistics(user.id, countRight, {
+          sprintRight: countRight,
+          sprintAll: countAll,
+        });
       }
     }
   };
@@ -179,7 +187,7 @@ export default function Sprint() {
         }
       });
     }
-    updateStatistics(result.filter((el) => el.right).length);
+    updateStatistics(result.filter((el) => el.right).length, result.length);
   };
 
   const handlePlayAgain = () => {

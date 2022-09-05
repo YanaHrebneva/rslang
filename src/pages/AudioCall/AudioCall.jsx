@@ -118,7 +118,6 @@ export default function AudioCall() {
   };
 
   const updateStatistics = async (countRight, countAll) => {
-    // console.log(typeof countRight, typeof countAll);
     if (user) {
       let countLearnedWords;
       let countAudioCallRight;
@@ -133,14 +132,12 @@ export default function AudioCall() {
         await StatisticsService.updateStatistics(user.id, countLearnedWords, {
           audioCallRight: countAudioCallRight,
           audioCallAll: countAudioCallAll,
-        }).then((result) => console.log(result.data));
-        console.log(5);
+        });
       } else {
         await StatisticsService.updateStatistics(user.id, countRight, {
           audioCallRight: countRight,
           audioCallAll: countAll,
         });
-        console.log(6);
       }
     }
   };
