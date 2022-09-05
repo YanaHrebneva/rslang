@@ -18,7 +18,6 @@ export default function BookPage() {
   const [state, setToggleState] = useState(false);
   const [groups, setGroups] = useState(() => (JSON.parse(localStorage.getItem('userSessionPageGroup'))?.groups || 1));
   const { user } = useAuth();
-
   const userId = user?.userId || user?.id;
   const filters = {
     filtersHard: { $and: [{ 'userWord.difficulty': 'hard' }] },
