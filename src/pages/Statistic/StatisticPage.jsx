@@ -13,32 +13,6 @@ import { useState, useEffect } from 'react';
 import useAuth from '../../hooks/useAuth';
 import StatisticsService from '../../services/StatisticsService';
 
-const tiers = [
-  {
-    title: 'Аудиовызов',
-    price: '0',
-    description: [
-      'изучено слов :',
-      'правильных ответов:',
-      ' длинная серия ответов :',
-
-    ],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Спринт',
-    price: '30',
-    description: [
-      'изучено слов :',
-      'правильных ответов:',
-      'длинная серия ответов :',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-];
-
 function StatisticPage() {
   const [learnedWords, setLearnedWords] = useState(0);
   const [learnedWordsAudioCall, setLearnedWordsAudioCall] = useState(0);
