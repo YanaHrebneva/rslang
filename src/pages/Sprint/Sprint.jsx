@@ -136,7 +136,7 @@ export default function Sprint() {
         });
       } else {
         await StatisticsService.updateStatistics(user.id, countRight, {
-          ...res.data.optional,
+          ...res.data?.optional,
           sprintRight: countRight,
           sprintAll: countAll,
         });

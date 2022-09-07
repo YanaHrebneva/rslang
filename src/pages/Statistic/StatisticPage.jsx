@@ -19,9 +19,11 @@ function StatisticPage() {
     if (user) {
       StatisticsService.getStatistics(user.id)
         .then(({ data }) => {
-          const { learnedWords, optional } = data;
-          const newStatistics = { learnedWords, ...optional };
-          setStatistics(newStatistics);
+          if (data) {
+            const { learnedWords, optional } = data;
+            const newStatistics = { learnedWords, ...optional };
+            setStatistics(newStatistics);
+          }
         });
     }
   }, []);

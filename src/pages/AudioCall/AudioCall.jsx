@@ -136,7 +136,7 @@ export default function AudioCall() {
         });
       } else {
         await StatisticsService.updateStatistics(user.id, countRight, {
-          ...res.data.optional,
+          ...res.data?.optional,
           audioCallRight: countRight,
           audioCallAll: countAll,
         });
