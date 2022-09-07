@@ -95,6 +95,10 @@
     left: 4rem;
 }
 
+.option-img-small {
+    width: 240px;
+}
+
 .team-block {
     background-color: var(--color-bg);
     border-bottom: 2px solid var(--color-menu-font);
@@ -186,5 +190,6 @@
     .team-wrapper {
         padding: 4rem 5rem;
         flex-direction: column-reverse;
+        gap: 2rem;
     }
 }

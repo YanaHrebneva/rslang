@@ -36,3 +36,9 @@ nav > a:hover {
 	text-transform: uppercase;
 	color:var(--color-menu-font);
 }
+
+@media (max-width: 1350px) {
+	header {
+		padding: 2rem 10rem;
+	}
+}

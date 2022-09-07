@@ -33,7 +33,7 @@ export default function HomePage() {
           <div className="option">
             <h3 className="option-title">Статистика</h3>
             <span className="option-description">Отслеживай свой прогресс и стремись к новым целям!</span>
-            <img className="option-img" src="assets/images/ReadingDoodle.png" alt="" />
+            <img className="option-img option-img-small" src="assets/images/ReadingDoodle.png" alt="" />
           </div>
         </div>
       </div>
