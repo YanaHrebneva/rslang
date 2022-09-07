@@ -126,9 +126,9 @@ export default function AudioCall() {
       const res = await StatisticsService.getStatistics(user.id);
 
       if (res.successful) {
-        countLearnedWords = res.data.learnedWords + countRight;
-        countAudioCallRight = res.data.optional.audioCallRight + countRight;
-        countAudioCallAll = res.data.optional.audioCallAll + countAll;
+        countLearnedWords = (res.data.learnedWords || 0) + countRight;
+        countAudioCallRight = (res.data.optional.audioCallRight || 0) + countRight;
+        countAudioCallAll = (res.data.optional.audioCallAll || 0) + countAll;
         await StatisticsService.updateStatistics(user.id, countLearnedWords, {
           ...res.data.optional,
           audioCallRight: countAudioCallRight,
