@@ -80,19 +80,20 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       alignItems="center"
       justifyContent="center"
       onKeyPress={() => console.log('aaaaa')}
+      mt={8}
     >
       <Grid>
         {!selectedWord
           && (
-          <div style={{ height: 340 }}>
+          <div style={{ height: 260 }}>
             <IconButton onClick={() => audio.play()} sx={{ width: 200, height: 200 }}>
               <Avatar src="./assets/images/icon-sound.png" sx={{ width: 100, height: 100 }} />
             </IconButton>
           </div>
           )}
         {selectedWord && (
-          <div style={{ height: 340 }}>
-            <img src={`${baseUrl}/${words[0].image}`} alt={words[0].word} />
+          <div style={{ height: 260 }}>
+            <img src={`${baseUrl}/${words[0].image}`} alt={words[0].word} sx={{ height: 100 }} />
             <div>
               <IconButton onClick={() => audio.play()}>
                 <Avatar src="./assets/images/icon-sound.png" />
@@ -101,7 +102,7 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
             </div>
           </div>
         )}
-        <Grid container justifyContent="center" spacing={4} mt={6} mb={6}>
+        <Grid container justifyContent="center" spacing={4} mt={6} mb={5}>
           {words[0].variants.map((v, i) => (
             <Grid item key={v.id}>
               <Button variant="outlined" value={v.id} color={defineButtonColor(v.id)} onClick={handleChoose}>
