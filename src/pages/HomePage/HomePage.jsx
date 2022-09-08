@@ -46,7 +46,7 @@ export default function HomePage() {
             <div className="team-member">
               <div className="team-member-img team-member-andy"> </div>
               <div className="team-member-text-wrap">
-                <span className="team-member-name">AndrewMatsiash</span>
+                <a href="https://github.com/AndrewMatsiash" className="team-member-name" target="_blank" rel="noreferrer">AndrewMatsiash</a>
                 <p className="team-member-text">Реализация всего учебника и его составляющих, работа с отображением статистики на соответсвующей странице, настройка роутинга</p>
               </div>
             </div>
@@ -54,7 +54,7 @@ export default function HomePage() {
             <div className="team-member">
               <div className="team-member-img team-member-nastya"> </div>
               <div className="team-member-text-wrap">
-                <span className="team-member-name">nastagh</span>
+                <a href="https://github.com/nastagh" className="team-member-name" target="_blank" rel="noreferrer">nastagh</a>
                 <p className="team-member-text">Разработка общих компонентов игр, игра «Аудиовызов», реализация авторизации и регистрации пользователя, а также создание соответствующих страниц</p>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function HomePage() {
             <div className="team-member">
               <div className="team-member-img team-member-yana"> </div>
               <div className="team-member-text-wrap">
-                <span className="team-member-name">YanaHrebneva</span>
+                <a href="https://github.com/YanaHrebneva" className="team-member-name" target="_blank" rel="noreferrer">YanaHrebneva</a>
                 <p className="team-member-text">Тимлид, дизайн приложения, верстка главной страницы, игра «Спринт», настройка работы с сервером</p>
               </div>
             </div>
