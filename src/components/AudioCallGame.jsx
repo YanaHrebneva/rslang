@@ -84,14 +84,14 @@ export default function AudioCallGame({ wordsPool, onEnd }) {
       <Grid>
         {!selectedWord
           && (
-          <div>
+          <div style={{ height: 340 }}>
             <IconButton onClick={() => audio.play()} sx={{ width: 200, height: 200 }}>
               <Avatar src="./assets/images/icon-sound.png" sx={{ width: 100, height: 100 }} />
             </IconButton>
           </div>
           )}
         {selectedWord && (
-          <div>
+          <div style={{ height: 340 }}>
             <img src={`${baseUrl}/${words[0].image}`} alt={words[0].word} />
             <div>
               <IconButton onClick={() => audio.play()}>
